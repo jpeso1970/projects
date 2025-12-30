@@ -17,6 +17,18 @@ Professional projects, client work, internal initiatives, and strategic planning
   - Next Milestone: Jan 11, 2026 (P12 close - must succeed)
   - Tags: #critical #at-risk #remediation #urgent #ceo-escalation #service-failure
 
+### 🔥 HIGH Priority
+- **[Quatrro - Uno Restaurants Remediation](./client-projects/quatrro-uno-restaurants-remediation/PROJECT.md)** - HIGH priority client remediation
+  - Status: 🔥 Active - New Remediation Project
+  - Priority: HIGH
+  - Progress: 0%
+  - Created: 2025-12-30
+  - Due: 2025-03-31 (Q1 2025)
+  - Owner: Jason Pace
+  - Client: Uno Restaurants, LLC (HubSpot Company ID: 16923648158)
+  - Scope: Financial and accounting remediation services
+  - Tags: #remediation #client #restaurant #quatrro #f&a
+
 ## Common Containers
 - **client-projects/** - Client deliverables and engagements
 - **internal/** - Internal company projects
@@ -33,4 +45,4 @@ Professional projects, client work, internal initiatives, and strategic planning
 - Include client approval tracking
 
 ---
-Last Updated: 2025-12-28
+Last Updated: 2025-12-30
