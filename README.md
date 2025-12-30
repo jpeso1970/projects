@@ -387,12 +387,31 @@ A: Detailed enough that "future you" understands what needs doing.
 
 **System created**: 2025-01-15
 **Version**: 1.0
+**Documentation Version**: 1.0.0
 
-For system updates or improvements, update this README and template files as you learn what works best for your workflow.
+### 📚 Comprehensive Documentation
 
-**Skills Location**: `~/.claude/skills/project-management/`
+**Looking for detailed guides?** See [.docs/INDEX.md](./.docs/INDEX.md) for complete documentation:
+
+- **[Skills Reference](./.docs/skills/README.md)** - Complete guide to all skills (/new-project, /hubspot-sync, etc.)
+- **[HubSpot Integration](./.docs/integrations/hubspot-setup-guide.md)** - Complete HubSpot setup and usage guide
+- **[File Structure Reference](./.docs/file-structures/project-files-reference.md)** - All YAML fields and file formats explained
+- **[Common Workflows](./.docs/workflows/common-workflows.md)** - Step-by-step guides for 8 common tasks
+- **[Documentation Index](./.docs/INDEX.md)** - Master index with search by use case and role
+
+**Quick Links:**
+- [Starting a New Client Project](./.docs/workflows/common-workflows.md#workflow-1-starting-a-new-client-project)
+- [Weekly Project Review](./.docs/workflows/common-workflows.md#workflow-2-weekly-project-review)
+- [HubSpot Troubleshooting](./.docs/integrations/hubspot-setup-guide.md#troubleshooting)
+
+### File Locations
+
+**Skills Location**: `~/.claude/skills/`
 **Agents Location**: `~/projects/.agents/`
 **Templates Location**: `~/projects/.templates/`
+**Documentation**: `~/projects/.docs/`
+
+For system updates or improvements, update this README and template files as you learn what works best for your workflow.
 
 ---
 
