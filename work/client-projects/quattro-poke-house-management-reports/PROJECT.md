@@ -10,7 +10,7 @@ priority: "high"
 created: 2025-12-29
 due: null
 completed: null
-last_updated: 2025-12-29
+last_updated: 2025-12-30
 
 # Tags (array)
 tags:
@@ -26,6 +26,7 @@ stakeholders:
   - "James Deng (Founder & CEO)"
   - "Rolland Chiu (Business Owner)"
   - "Matteo Pichi (Contact)"
+  - "Scott Essex (Controller)"
 
 # Metrics (for agent tracking)
 progress_percent: 0
@@ -42,7 +43,7 @@ external_links:
 repository: null
 
 # HubSpot Integration
-hubspot_last_sync: "2025-12-29"
+hubspot_last_sync: "2025-12-30"
 hubspot_company_id: "28584907318"
 hubspot_deal_id: "32554918000"
 

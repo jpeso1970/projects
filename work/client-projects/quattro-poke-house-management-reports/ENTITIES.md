@@ -25,6 +25,38 @@ This file tracks all people, organizations, and systems mentioned in project doc
   - Source: HubSpot (synced 2025-12-29)
   - Notes: Italian contact, likely related to Italy operations
 
+- **Scott Essex** - Controller ⭐
+  - Email: scott@poke.house
+  - Phone: Not provided
+  - HubSpot: [View Contact](https://app.hubspot.com/contacts/24432642/record/0-1/188924445195)
+  - Source: HubSpot (synced 2025-12-30)
+  - Notes: **KEY CONTACT** for management reports project - added 2025-12-29
+
+- **Trey Zhou** - Franchisor
+  - Email: trey@poke.house
+  - Phone: +1 (510) 894-5400
+  - HubSpot: [View Contact](https://app.hubspot.com/contacts/24432642/record/0-1/116281718905)
+  - Source: HubSpot (synced 2025-12-30)
+  - Notes: Franchise operations oversight
+
+- **Tom Qiao** - Owner
+  - Email: tom.qiao@poke.house
+  - Phone: Not provided
+  - HubSpot: [View Contact](https://app.hubspot.com/contacts/24432642/record/0-1/123209268548)
+  - Source: HubSpot (synced 2025-12-30)
+
+- **Jason Huang** - Owner
+  - Email: jason@poke.house
+  - Phone: Not provided
+  - HubSpot: [View Contact](https://app.hubspot.com/contacts/24432642/record/0-1/123303963320)
+  - Source: HubSpot (synced 2025-12-30)
+
+- **Ryan Mai** - Owner
+  - Email: ryan@poke.house
+  - Phone: Not provided
+  - HubSpot: [View Contact](https://app.hubspot.com/contacts/24432642/record/0-1/123316280979)
+  - Source: HubSpot (synced 2025-12-30)
+
 ### Quatrro Team
 
 - **Jason Pace** - Project Owner
@@ -43,6 +75,6 @@ This file tracks all people, organizations, and systems mentioned in project doc
 
 ---
 
-**Last Updated**: 2025-12-29
-**HubSpot Sync**: 2025-12-29
-**Total Contacts**: 10 (3 key stakeholders listed above)
+**Last Updated**: 2025-12-30
+**HubSpot Sync**: 2025-12-30
+**Total Contacts**: 11 (8 key stakeholders listed above)
