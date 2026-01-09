@@ -16,6 +16,7 @@ from .views.imports_view import render_imports_modal, process_imports_with_feedb
 from .views.import_history_view import render_import_history_modal, show_undo_result  # PHASE 2: Undo system
 from .views.task_move_view import render_project_picker, show_move_result  # PHASE 3: Task move/reassign
 from .views.project_create_view import render_project_create_modal, show_project_create_result  # PHASE 4: Create project
+from .views.marquee import Marquee, render_marquee_border_top, render_marquee_border_bottom  # PHASE 5: Scrolling marquee
 from .views.help_view import render_help_modal
 from .task_parser import parse_tasks_file, toggle_task_completion, delete_task, undo_task_deletion
 from .import_processor import create_import_dir_readme, ImportProcessor
@@ -74,6 +75,7 @@ def main_loop(stdscr):
     auto_import_interval = 30  # Check for imports every 30 seconds
     summary_scroll_offset = 0  # Scroll position for summary pane
     all_projects = projects  # Keep unfiltered list
+    marquee = Marquee(refresh_interval=30)  # PHASE 5: Scrolling marquee for project updates
 
     # Apply initial filter and sort
     def apply_filter_and_sort(all_projs, filt, sort):
@@ -142,12 +144,22 @@ def main_loop(stdscr):
                     # Silent fail - don't interrupt user
                     pass
 
-        # Only render if something changed
+        # Render dashboard if something changed
         if needs_render:
             render_three_pane_view(stdscr, projects, tasks, selected_project_idx,
                                   selected_task_idx, active_pane, sort_by, summary_scroll_offset,
                                   filter_by, len(all_projects))
             needs_render = False
+
+        # PHASE 5: Always render scrolling marquee for continuous animation
+        height, width = stdscr.getmaxyx()
+        marquee_border_y = height - 3
+        marquee_content_y = height - 2
+
+        # Draw marquee border and content (footer at height-1 serves as bottom border)
+        render_marquee_border_top(stdscr, marquee_border_y, width)
+        marquee.render(stdscr, marquee_content_y, width, all_projects)
+        stdscr.refresh()
 
         # Get user input with timeout (100ms) to allow auto-import checks
         stdscr.timeout(100)

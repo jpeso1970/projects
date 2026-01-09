@@ -58,8 +58,13 @@ def render_three_pane_view(stdscr, projects: List[Project], tasks: List[Task],
         pass
 
     # === BOTTOM: TASKS (full width) ===
+    # Reserve 3 lines at bottom: marquee border, marquee content, footer
+    tasks_bottom = height - 3
     draw_tasks_pane(stdscr, tasks, selected_task_idx, active_pane == "tasks",
-                   0, top_height + 1, width, height, selected_project)
+                   0, top_height + 1, width, tasks_bottom, selected_project)
+
+    # === MARQUEE (placeholder for now, will be rendered from main.py) ===
+    # Lines height-3 (border) and height-2 (content) reserved for marquee
 
     # === FOOTER ===
     draw_footer(stdscr, height, width, active_pane)
