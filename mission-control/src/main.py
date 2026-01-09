@@ -12,11 +12,11 @@ from .views.dashboard import render_dashboard, init_colors
 from .views.split_view import render_split_view
 from .views.three_pane_view import render_three_pane_view
 from .views.imports_view import render_imports_modal, process_imports_with_feedback
-from .views.review_view import render_review_modal
+# from .views.review_view import render_review_modal  # PHASE 1: Removed staging/review workflow
 from .views.help_view import render_help_modal
 from .task_parser import parse_tasks_file, toggle_task_completion, delete_task, undo_task_deletion
 from .import_processor import create_import_dir_readme, ImportProcessor
-from .staging import StagingManager
+# from .staging import StagingManager  # PHASE 1: Staging system removed
 
 
 def main_loop(stdscr):
@@ -378,80 +378,11 @@ def main_loop(stdscr):
                 selected_task_idx = max(0, len(tasks) - 1)
                 needs_render = True
 
-        elif key == ord('i') or key == ord('I'):
-            # Review workflow: Check for pending staged analyses first
-            staging_dir = projects_root / ".mission-control" / "staging"
-            staging_manager = StagingManager(staging_dir)
-            pending = staging_manager.get_pending_analyses()
-
-            if pending:
-                # Show review modal for pending analyses
-                try:
-                    result = render_review_modal(stdscr, staging_manager)
-
-                    if result == 'processed':
-                        # Apply approved analyses
-                        stdscr.clear()
-                        height, width = stdscr.getmaxyx()
-                        stdscr.addstr(height // 2, (width - 30) // 2,
-                                     "Applying approved changes...",
-                                     curses.A_BOLD)
-                        stdscr.refresh()
-
-                        processor = ImportProcessor(import_dir, projects_root)
-                        apply_summary = processor.apply_approved_analyses()
-
-                        # Show results
-                        stdscr.clear()
-                        y = height // 2 - 5
-                        x_center = width // 2
-
-                        title = "✓ Changes Applied"
-                        stdscr.addstr(y, x_center - len(title) // 2, title,
-                                     curses.A_BOLD)
-                        y += 2
-
-                        results = [
-                            f"Tasks added: {apply_summary['tasks_added']}",
-                            f"Decisions added: {apply_summary['decisions_added']}",
-                            f"Updates applied: {apply_summary['updates_applied']}",
-                            f"Projects updated: {len(apply_summary['projects_updated'])}"
-                        ]
-
-                        for result_text in results:
-                            stdscr.addstr(y, x_center - len(result_text) // 2, result_text)
-                            y += 1
-
-                        y += 2
-                        prompt = "Press any key to continue..."
-                        stdscr.addstr(y, x_center - len(prompt) // 2, prompt)
-                        stdscr.refresh()
-                        stdscr.getch()
-
-                        # Refresh projects
-                        all_projects = load_all_projects()
-                        projects = apply_filter_and_sort(all_projects, filter_by, sort_by)
-                        needs_render = True
-
-                except Exception as e:
-                    stdscr.clear()
-                    height, width = stdscr.getmaxyx()
-                    stdscr.addstr(height // 2, (width - 40) // 2,
-                                 f"Error: {str(e)[:40]}", curses.A_BOLD)
-                    stdscr.refresh()
-                    curses.napms(2000)
-                    needs_render = True
-            else:
-                # No pending analyses, show import processing modal
-                should_process = render_imports_modal(stdscr, import_dir, projects_root)
-                if should_process:
-                    process_imports_with_feedback(stdscr, import_dir, projects_root)
-                    # Refresh projects in case new meeting notes were added
-                    all_projects = load_all_projects()
-                    projects = apply_filter_and_sort(all_projects, filter_by, sort_by)
-                if selected_project_idx >= len(projects):
-                    selected_project_idx = max(0, len(projects) - 1)
-                needs_render = True
+        # [i] key disabled - will be repurposed for inbox in future phase
+        # elif key == ord('i') or key == ord('I'):
+        #     # PHASE 1: Staging/review workflow removed - imports now apply automatically
+        #     # FUTURE: This key will be repurposed to open the inbox for unmatched content
+        #     pass
 
         elif key == ord('?'):
             # Show help modal

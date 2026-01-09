@@ -10,7 +10,7 @@ priority: "high"
 created: 2026-01-05
 due: null
 completed: null
-last_updated: 2026-01-08
+last_updated: 2026-01-09
 
 # Tags (array)
 tags:
@@ -66,6 +66,9 @@ auto_archive_on_complete: true
 **Last Updated**: 2026-01-05
 
 ### Recent Updates
+- 2026-01-09: • Client retention at risk, using lease cake service as incentive - JJ Martin is sitting on termination letter. Offering lease cake service to retain $150K annual revenue client. (from Call with JJ and 1 other.docx)
+- 2026-01-09: • Client retention at risk, lease cake offering may help - JJ has termination letter ready, trying to retain with $150K annual revenue proposal including lease cake services. Friday call scheduled to present additional services. (from Call with JJ and 1 other.docx)
+- 2026-01-09: • Client retention effort with lease cake offering - Burgerville priced at $275k annually including lease cake services. JJ has termination letter ready - it's either this deal or nothing. Friday call scheduled to finalize. (from Call with JJ and 1 other.docx)
 - 2026-01-08: Burgerville will either terminate entirely or keep partial business during Restaurant 365 migration (from MUC Key Accounts at Risk - Weekly Call.docx)
 - 2026-01-05: Project initiated with HubSpot integration planned
 

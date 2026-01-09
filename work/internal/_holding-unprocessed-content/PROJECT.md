@@ -10,7 +10,7 @@ priority: "low"
 created: 2026-01-08
 due: null
 completed: null
-last_updated: 2026-01-08
+last_updated: 2026-01-09
 
 # Tags (array)
 tags:

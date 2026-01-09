@@ -73,7 +73,7 @@ def render_help_modal(stdscr):
             ("u", "Undo last deletion"),
         ]),
         ("Other", [
-            ("i", "Import files / Review pending analyses"),
+            # ("i", "Import files / Review pending analyses"),  # PHASE 1: Disabled, will be inbox later
             ("?", "Show this help screen"),
             ("q", "Quit Mission Control"),
         ]),

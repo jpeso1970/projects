@@ -15,7 +15,7 @@ try:
     # Try relative imports first (when used as package)
     from .content_analyzer import ContentAnalyzer
     from .content_router import ContentRouter
-    from .staging import StagingManager
+    # from .staging import StagingManager  # PHASE 1: No longer needed
     from .file_reader import read_file_content
     AI_ENABLED = True
 except ImportError:
@@ -23,7 +23,7 @@ except ImportError:
         # Fall back to absolute imports (when used as standalone module)
         from content_analyzer import ContentAnalyzer
         from content_router import ContentRouter
-        from staging import StagingManager
+        # from staging import StagingManager  # PHASE 1: No longer needed
         from file_reader import read_file_content
         AI_ENABLED = True
     except ImportError:
@@ -333,21 +333,19 @@ class ImportProcessor:
         # Move file to archive
         import_file.path.rename(archive_path)
 
-    def process_all(self, auto_route: bool = True, use_ai: bool = False,
-                   stage_for_review: bool = True) -> Dict[str, any]:
+    def process_all(self, auto_route: bool = True, use_ai: bool = False) -> Dict[str, any]:
         """
         Process all files in import directory.
 
         Args:
             auto_route: If True, automatically route high-confidence matches
             use_ai: If True, use AI to analyze content and extract structured data
-            stage_for_review: If True (default), stage AI analyses for review instead of applying
 
         Returns:
             Summary of processing results
         """
         if use_ai:
-            return self.process_all_with_ai(stage_for_review=stage_for_review)
+            return self.process_all_with_ai()
 
         import_files = self.scan_import_directory()
 
@@ -373,14 +371,11 @@ class ImportProcessor:
 
         return summary
 
-    def process_all_with_ai(self, stage_for_review: bool = True) -> Dict[str, any]:
+    def process_all_with_ai(self) -> Dict[str, any]:
         """
         Process all files using AI content analysis.
 
-        Extracts tasks, decisions, and updates from content.
-
-        Args:
-            stage_for_review: If True, stage analyses for review; if False, apply directly
+        Extracts tasks, decisions, and updates from content and applies them immediately.
 
         Returns:
             Summary of AI processing results
@@ -398,11 +393,7 @@ class ImportProcessor:
 
         # Initialize AI components
         analyzer = ContentAnalyzer(api_key)
-        router = ContentRouter(self.projects_dir) if not stage_for_review else None
-
-        # Initialize staging manager if needed
-        staging_dir = self.projects_dir / ".mission-control" / "staging"
-        staging_manager = StagingManager(staging_dir) if stage_for_review else None
+        router = ContentRouter(self.projects_dir)
 
         # Get all project names
         known_projects = self._get_all_project_names()
@@ -413,7 +404,6 @@ class ImportProcessor:
         summary = {
             'total_files': len(import_files),
             'analyzed': 0,
-            'staged': 0,
             'tasks_added': 0,
             'decisions_added': 0,
             'updates_applied': 0,
@@ -432,47 +422,27 @@ class ImportProcessor:
 
                 summary['analyzed'] += 1
 
-                if stage_for_review:
-                    # Stage for review instead of applying
-                    staging_path = staging_manager.stage_analysis(
-                        import_file.filename, analysis
-                    )
-                    summary['staged'] += 1
+                # Apply directly to projects
+                routing_result = router.route_analysis(analysis, import_file.filename)
 
-                    summary['results'].append({
-                        'filename': import_file.filename,
-                        'tasks': len(analysis.tasks),
-                        'decisions': len(analysis.decisions),
-                        'updates': len(analysis.updates),
-                        'projects': list(analysis.project_mentions.keys()),
-                        'staged_at': str(staging_path)
-                    })
+                summary['tasks_added'] += routing_result['tasks_added']
+                summary['decisions_added'] += routing_result['decisions_added']
+                summary['updates_applied'] += routing_result['updates_applied']
+                summary['projects_updated'].update(routing_result['projects_updated'])
+                summary['holding_items'] += routing_result['holding_items']
+                summary['errors'].extend(routing_result['errors'])
 
-                    # Archive file after staging
-                    self._archive_file(import_file)
+                summary['results'].append({
+                    'filename': import_file.filename,
+                    'tasks': len(analysis.tasks),
+                    'decisions': len(analysis.decisions),
+                    'updates': len(analysis.updates),
+                    'projects': list(analysis.project_mentions.keys()),
+                    'routing': routing_result
+                })
 
-                else:
-                    # Apply directly (legacy mode)
-                    routing_result = router.route_analysis(analysis, import_file.filename)
-
-                    summary['tasks_added'] += routing_result['tasks_added']
-                    summary['decisions_added'] += routing_result['decisions_added']
-                    summary['updates_applied'] += routing_result['updates_applied']
-                    summary['projects_updated'].update(routing_result['projects_updated'])
-                    summary['holding_items'] += routing_result['holding_items']
-                    summary['errors'].extend(routing_result['errors'])
-
-                    summary['results'].append({
-                        'filename': import_file.filename,
-                        'tasks': len(analysis.tasks),
-                        'decisions': len(analysis.decisions),
-                        'updates': len(analysis.updates),
-                        'projects': list(analysis.project_mentions.keys()),
-                        'routing': routing_result
-                    })
-
-                    # Archive file after processing
-                    self._archive_file(import_file)
+                # Archive file after processing
+                self._archive_file(import_file)
 
             except Exception as e:
                 error_msg = f"Error processing {import_file.filename}: {e}"
@@ -604,46 +574,64 @@ def create_import_dir_readme(import_dir: Path):
 
     readme_content = """# Import Directory
 
-Drop meeting summaries, transcripts, and updates here for automatic routing.
+Drop files here for AI-powered import processing and automatic routing to projects.
 
 ## How It Works
 
-1. **Drop files** in this directory (text, markdown, PDF, etc.)
-2. The system **detects project mentions** in:
-   - Filename (e.g., `quatrro-the-one-group-meeting-notes.md`)
-   - File content (project names mentioned in text)
-3. Files are **automatically routed** to the appropriate project's `meeting-notes/` folder
-4. Files mentioning **multiple projects** are copied to each project
+1. **Drop files** in this directory (images, PDFs, text, markdown, documents, etc.)
+2. **Watch Imports** auto-processes every 10 seconds (or process manually)
+3. AI analyzes content and routes to appropriate project(s) **automatically**
+4. Content is added immediately to project files (tasks.md, PROJECT.md)
+5. Files are archived to `../.import-archive/`
 
-## Filename Tips
+## Two Ways to Process
 
-For best results, include the project name in the filename:
-- `quatrro-transcendent-brands-2024-01-07-meeting.md`
-- `poke-house-kickoff-notes.txt`
-- `the-one-group-status-update.md`
+### Method 1: Watch Imports (Recommended)
+1. Drop files here
+2. Launch Watch Imports: `~/projects/mission-control/watch-imports`
+   - Or double-click **Watch Imports.command** in Finder
+3. Files are auto-processed every 10 seconds
+4. Changes applied automatically - no review needed!
 
-## Processing
+### Method 2: Manual Processing
+1. Drop files here
+2. Open Mission Control: `~/projects/mission-control/mc`
+3. Files will be processed next time watch-imports runs
+   - Or process manually: `mc --process-imports`
 
-Run manually:
-```bash
-~/.claude/skills/mission-control/mc --process-imports
-```
+## Supported File Types
 
-Or check import status in Mission Control (press `i` key).
+- **Images**: PNG, JPG, HEIC, etc. (OCR text extraction)
+- **Documents**: PDF, DOCX, TXT, MD
+- **Meeting transcripts**: Any text format
+- **Screenshots**: Auto-analyzed for content
 
-## File Formats Supported
+## AI Analysis
 
-- Plain text (.txt)
-- Markdown (.md)
-- PDFs (.pdf) - text will be extracted
-- Any text-based format
+The AI examines:
+- File content and text
+- Filename for project mentions
+- Context and subject matter
+- Related projects in the system
+
+Then automatically:
+- Routes to correct project(s)
+- Creates tasks
+- Records decisions
+- Notes updates
 
 ## What Happens to Files
 
-- **High confidence** (project in filename): Auto-routed and marked as processed
-- **Multiple projects**: Copied to each project
-- **Low confidence**: Flagged for manual review
-- **No mentions**: Kept here for manual processing
+1. **Analyzed**: AI extracts tasks, decisions, and updates
+2. **Applied**: Content automatically added to project files
+3. **Archived**: Files moved to `../.import-archive/` with timestamp
+
+## Trust First, Fix Later
+
+Files are processed automatically. If AI routes something incorrectly, you can:
+- Move tasks between projects (coming soon: `[m]` key)
+- Edit project files directly to fix mistakes
+- Future: Undo recent imports (coming soon: `[u]` key)
 
 ---
 Last Updated: {date}

@@ -5,26 +5,25 @@ Drop files here for AI-powered import processing and automatic routing to projec
 ## How It Works
 
 1. **Drop files** in this directory (images, PDFs, text, markdown, documents, etc.)
-2. **Process manually** or use **automatic monitoring**
-3. AI analyzes content and determines which project(s) the file belongs to
-4. Files are staged for review
-5. Approve in Mission Control dashboard
-6. Content is added to appropriate projects
+2. **Watch Imports** auto-processes every 10 seconds (or process manually)
+3. AI analyzes content and routes to appropriate project(s) **automatically**
+4. Content is added immediately to project files (tasks.md, PROJECT.md)
+5. Files are archived to `../.import-archive/`
 
 ## Two Ways to Process
 
-### Method 1: Manual Processing
-1. Drop files here
-2. Open Mission Control: `~/projects/mission-control/mc`
-3. Press **[i]** key to process imports
-4. Review AI suggestions and approve
-
-### Method 2: Automatic Monitoring
+### Method 1: Watch Imports (Recommended)
 1. Drop files here
 2. Launch Watch Imports: `~/projects/mission-control/watch-imports`
    - Or double-click **Watch Imports.command** in Finder
 3. Files are auto-processed every 10 seconds
-4. Open Mission Control and press **[i]** to review
+4. Changes applied automatically - no review needed!
+
+### Method 2: Manual Processing
+1. Drop files here
+2. Open Mission Control: `~/projects/mission-control/mc`
+3. Files will be processed next time watch-imports runs
+   - Or process manually: `mc --process-imports`
 
 ## Supported File Types
 
@@ -41,25 +40,24 @@ The AI examines:
 - Context and subject matter
 - Related projects in the system
 
-Then suggests:
-- Which project(s) to add content to
-- Tasks to create
-- Decisions to record
-- Updates to note
+Then automatically:
+- Routes to correct project(s)
+- Creates tasks
+- Records decisions
+- Notes updates
 
 ## What Happens to Files
 
-1. **Processed**: Files are archived to `../.import-archive/` with timestamp
-2. **Content**: Extracted information is staged in `../.mission-control/staging/`
-3. **Review**: You approve or reject each analysis in Mission Control
-4. **Applied**: Approved content is added to project files (tasks.md, PROJECT.md)
+1. **Analyzed**: AI extracts tasks, decisions, and updates
+2. **Applied**: Content automatically added to project files
+3. **Archived**: Files moved to `../.import-archive/` with timestamp
 
-## Quick Start
+## Trust First, Fix Later
 
-**Easiest way**:
-1. Open Finder → `~/projects/mission-control/`
-2. Double-click **Watch Imports.command**
-3. Drop files here and they're processed automatically!
+Files are processed automatically. If AI routes something incorrectly, you can:
+- Move tasks between projects (coming soon: `[m]` key)
+- Edit project files directly to fix mistakes
+- Future: Undo recent imports (coming soon: `[u]` key)
 
 ---
-Last Updated: 2026-01-08
+Last Updated: 2026-01-09

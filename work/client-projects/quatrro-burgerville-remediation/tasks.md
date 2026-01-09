@@ -28,6 +28,21 @@
 ## Active Tasks
 
 ### High Priority
+- [ ] Prepare for Burgerville retention call on Friday with lease cake offering
+  - Assignee: Michelle Darby
+  - Due: 2026-01-10
+  - Context: Using lease cake as additional service to retain client (from Call with JJ and 1 other.docx)
+
+- [ ] Present lease cake offering to Burgerville on Friday call
+  - Assignee: Michelle Darby
+  - Due: 2026-01-10
+  - Context: Additional service to help retain Burgerville client, already have termination letter (from Call with JJ and 1 other.docx)
+
+- [ ] Schedule Burgerville call for Friday to discuss lease cake services
+  - Assignee: Michelle Darby
+  - Due: 2026-01-10
+  - Context: Attempt to retain client by offering additional services (from Call with JJ and 1 other.docx)
+
 
 
 ### Medium Priority
