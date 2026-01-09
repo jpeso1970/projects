@@ -23,14 +23,14 @@ def render_project_picker(stdscr, projects: List, current_project_name: str,
         Selected project name, or None if cancelled
     """
     # Filter out current project
-    available_projects = [p for p in projects if p.name != current_project_name]
+    available_projects = [p for p in projects if p.project_dir.name != current_project_name]
 
     if not available_projects:
         _show_no_projects_message(stdscr, action)
         return None
 
     # Sort by category then name for easier browsing
-    available_projects.sort(key=lambda p: (p.category, p.name))
+    available_projects.sort(key=lambda p: (p.category, p.project_dir.name))
 
     selected_idx = 0
 
@@ -128,8 +128,8 @@ def render_project_picker(stdscr, projects: List, current_project_name: str,
             selected_idx = min(len(available_projects) - 1, selected_idx + 1)
 
         elif key == ord('\n') or key == curses.KEY_ENTER or key == 10 or key == 13:
-            # Return selected project name
-            return available_projects[selected_idx].name
+            # Return selected project name (directory name)
+            return available_projects[selected_idx].project_dir.name
 
         elif key == ord('q') or key == ord('Q'):
             return None
@@ -300,7 +300,7 @@ def _render_project_entry(stdscr, project, y: int, x: int,
     """Render a single project entry"""
     # Format: "  project-name (status)"
     status_indicator = project.status[:4] if hasattr(project, 'status') else ''
-    line = f"  {project.name}"
+    line = f"  {project.project_dir.name}"
 
     if status_indicator:
         line += f" ({status_indicator})"

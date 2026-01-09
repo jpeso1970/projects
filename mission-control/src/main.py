@@ -316,7 +316,7 @@ def main_loop(stdscr):
 
                 # Show project picker
                 dest_project_name = render_project_picker(
-                    stdscr, all_projects, current_project.name, action="move"
+                    stdscr, all_projects, current_project.project_dir.name, action="move"
                 )
 
                 if dest_project_name:
@@ -325,7 +325,7 @@ def main_loop(stdscr):
 
                     # Get full task info for moving
                     task_to_move = task_manager.get_task_from_line(
-                        tasks_file, task.text, current_project.name
+                        tasks_file, task.text, current_project.project_dir.name
                     )
 
                     if task_to_move:
@@ -479,7 +479,7 @@ def main_loop(stdscr):
                     new_project_name = result.get('project_name')
                     if new_project_name:
                         for i, proj in enumerate(projects):
-                            if proj.name == new_project_name:
+                            if proj.project_dir.name == new_project_name:
                                 selected_project_idx = i
                                 # Load tasks for new project
                                 tasks_file = projects[selected_project_idx].project_dir / "tasks.md"
