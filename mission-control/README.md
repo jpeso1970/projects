@@ -23,8 +23,7 @@ The easiest way to use Mission Control:
 
 1. Open **Finder** and navigate to `~/projects/mission-control/`
 2. Double-click one of these launchers:
-   - **Mission Control.command** - Main dashboard
-   - **Process Imports.command** - Import file processor
+   - **Mission Control.command** - Main dashboard (includes import processing via `[i]` key)
    - **Watch Imports.command** - Continuous import monitor
 
 Each launcher opens a new Terminal window and runs the application.
@@ -32,11 +31,8 @@ Each launcher opens a new Terminal window and runs the application.
 ### ⌨️ Command Line Launch
 
 ```bash
-# Main dashboard
+# Main dashboard (includes import processing via [i] key)
 ~/projects/mission-control/mc
-
-# Process imports once
-~/projects/mission-control/process-imports
 
 # Watch for imports continuously
 ~/projects/mission-control/watch-imports
@@ -101,19 +97,21 @@ Use **[** and **]** keys to scroll through decisions and updates when there's mo
 
 ## Import Processing
 
-### Process Imports (process-imports)
+### Two Ways to Process Imports
 
-Interactive TUI for processing files from `~/projects/import/`:
-
-**Workflow:**
+**Method 1: Manual Processing via Main Dashboard**
 1. Drop files into `~/projects/import/`
-2. Launch **Process Imports.command** or run `process-imports`
-3. Choose processing mode:
+2. Launch Mission Control dashboard
+3. Press **[i]** key to open import processor
+4. Choose processing mode:
    - **AI Analysis**: Uses Claude to analyze content and route to projects
    - **Manual Routing**: Select destination project manually
-4. Review and confirm routing
-5. Files are analyzed and staged for review
-6. Approve in main dashboard with **[i]** key
+5. Review and confirm routing
+6. Files are analyzed and staged for review
+7. Press **[i]** again to review and approve staged analyses
+
+**Method 2: Automatic Continuous Processing**
+Launch Watch Imports for hands-free monitoring (see below)
 
 **Supported Files:**
 - Images (PNG, JPG, HEIC, etc.)
@@ -122,7 +120,7 @@ Interactive TUI for processing files from `~/projects/import/`:
 - Documents (DOCX)
 - Meeting transcripts
 
-### Watch Imports (watch-imports)
+### Watch Imports
 
 Continuous monitoring mode that auto-processes files:
 
@@ -138,16 +136,18 @@ Continuous monitoring mode that auto-processes files:
 
 ## Import Review Workflow
 
-After files are processed (manually or automatically), they're staged for review:
+After files are processed (via manual import `[i]` key or Watch Imports), they're staged for review in the main dashboard:
 
 1. Launch main dashboard (`mc`)
-2. Press **[i]** to open import review
+2. Press **[i]** to open import review (if analyses are pending)
 3. Review each analysis:
    - See extracted content and AI reasoning
    - Choose to **Approve** or **Reject**
 4. After reviewing all items, apply approved changes
 5. Tasks, decisions, and updates are added to project files
 6. Original files are archived to `.import-archive/`
+
+**Note**: If no pending analyses exist, pressing `[i]` opens the import processor instead.
 
 ## Technical Details
 
@@ -156,12 +156,11 @@ After files are processed (manually or automatically), they're staged for review
 ```
 ~/projects/
 ├── mission-control/           # This application
-│   ├── mc                     # Main dashboard
-│   ├── process-imports        # Import processor TUI
+│   ├── mc                     # Main dashboard (includes import via [i] key)
+│   ├── process-imports        # Import processor (accessed via mc → [i])
 │   ├── watch-imports          # Continuous import watcher
-│   ├── Mission Control.command     # Double-click launcher
-│   ├── Process Imports.command     # Import processor launcher
-│   ├── Watch Imports.command       # Import watcher launcher
+│   ├── Mission Control.command     # Double-click launcher for dashboard
+│   ├── Watch Imports.command       # Double-click launcher for watcher
 │   └── src/
 │       ├── main.py            # Dashboard entry point
 │       ├── models.py          # Project dataclass
