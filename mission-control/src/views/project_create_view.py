@@ -68,7 +68,7 @@ def render_project_create_modal(stdscr, projects_dir: Path) -> Optional[Dict]:
         line_y = start_y + 2
         content_x = start_x + 3
 
-        instructions = "↑/↓: Navigate | Enter: Edit field | Tab: Next field | Ctrl+G: Create | q: Cancel"
+        instructions = "↑/↓: Navigate | Enter: Edit/Cycle | Tab: Next | c: Create | q: Cancel"
         try:
             stdscr.addstr(line_y, content_x, instructions[:modal_width-6],
                          curses.color_pair(COLOR_STALE))
@@ -175,7 +175,7 @@ def render_project_create_modal(stdscr, projects_dir: Path) -> Optional[Dict]:
                 pass
 
         # Footer
-        footer = "Ctrl+G to create project"
+        footer = "Press 'c' to create project"
         footer_x = start_x + (modal_width - len(footer)) // 2
         try:
             stdscr.addstr(start_y + modal_height - 2, footer_x, footer,
@@ -284,7 +284,7 @@ def render_project_create_modal(stdscr, projects_dir: Path) -> Optional[Dict]:
 
                 error_message = None
 
-            elif key == 7:  # Ctrl+G - Create project
+            elif key == ord('c') or key == ord('C'):  # Create project
                 # Validate and create
                 validation_error = _validate_fields(fields)
                 if validation_error:
