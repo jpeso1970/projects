@@ -18,6 +18,17 @@ Professional projects, client work, internal initiatives, and strategic planning
   - Tags: #critical #at-risk #remediation #urgent #ceo-escalation #service-failure
 
 ### 🔥 HIGH Priority
+- **[Quatrro - The One Group Remediation](./client-projects/quatrro-the-one-group-remediation/PROJECT.md)** - HIGH priority client remediation
+  - Status: 🔥 Active - F&A Remediation
+  - Priority: HIGH
+  - Progress: 0%
+  - Created: 2025-12-29
+  - Owner: Jason Pace
+  - Client: The ONE Group (DBA Benihana) - HubSpot Company ID: 16924095357
+  - Deal Value: $472,000 (Closed Won - Nov 26, 2024)
+  - Key Contacts: Christi Hing (CFO), Linda Siluk (Interim CFO), Daniel Cunningham (CIO)
+  - Tags: #remediation #client #hospitality #quatrro #f&a #hubspot
+
 - **[Quatrro - Uno Restaurants Remediation](./client-projects/quatrro-uno-restaurants-remediation/PROJECT.md)** - HIGH priority client remediation
   - Status: 🔥 Active - New Remediation Project
   - Priority: HIGH
@@ -45,4 +56,4 @@ Professional projects, client work, internal initiatives, and strategic planning
 - Include client approval tracking
 
 ---
-Last Updated: 2025-12-30
+Last Updated: 2026-01-07

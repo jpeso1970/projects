@@ -1,6 +1,6 @@
 # Project Entities
 
-Last Updated: 2025-12-29 (HubSpot Sync)
+Last Updated: 2025-12-30 (HubSpot Sync)
 
 ## People
 
@@ -14,7 +14,7 @@ Last Updated: 2025-12-29 (HubSpot Sync)
   - Email: jlavigne@transcendentbrandsco.com
   - Phone: Not available
   - HubSpot: [View Contact](https://app.hubspot.com/contacts/24432642/record/0-1/171920333601)
-  - Source: HubSpot (synced 2025-12-29), Meeting transcriptions
+  - Source: HubSpot (synced 2025-12-30), Meeting transcriptions
   - Handles day-to-day accounting operations
   - Primary executor of month-end close process
   - Managing leases, cash over short, period close activities

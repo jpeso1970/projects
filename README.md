@@ -97,6 +97,59 @@ The skill will:
 - Repository integration
 - Technical decision logs
 
+**Featured Development Tools:**
+
+#### Mission Control Dashboard (`/mission-control`)
+**Purpose**: Terminal-based dashboard for viewing and managing all projects in the system
+
+**Technology**: Python + curses TUI (Terminal User Interface)
+
+**Capabilities**:
+- ✅ Three-pane interface: Projects | Summary | Tasks
+- ✅ Real-time project status with visual indicators
+- ✅ Scrollable project decisions and updates
+- ✅ Task management with completion tracking
+- ✅ Multiple sort options (priority, category, due date, risk)
+- ✅ Auto-import processing with AI analysis
+- ✅ Import review workflow with staging
+- ✅ Keyboard-driven navigation (no mouse required)
+
+**Status**: Production-ready (v1.0, January 2026)
+- Enhanced scrolling interface with flicker-free rendering
+- Recent decisions and updates display
+- Robust import processor with AI routing
+- Continuous import watcher mode
+
+**Documentation**: See `mission-control/README.md` for complete setup and usage guide
+
+**Use Case**: Quick visual overview of all projects, task tracking, and bulk file imports. The primary interface for daily project management alongside Claude AI.
+
+**Quick Start**: Run `~/projects/mission-control/mc` to launch the dashboard.
+
+---
+
+#### Client Monitoring System (`/client-monitoring`)
+**Purpose**: Automated monitoring of Microsoft Teams and Outlook when API access is unavailable
+
+**Technology**: Python + Playwright browser automation
+
+**Capabilities**:
+- ✅ Monitors Teams chat messages and channels
+- ✅ Captures Outlook inbox emails
+- ✅ Persistent authentication (login once)
+- ✅ Anti-detection measures for Microsoft's browser checks
+- ✅ Saves data to JSON files with deduplication
+- ✅ Runs on schedule or continuously
+
+**Status**: Production-ready (tested January 2, 2026)
+- Successfully capturing messages from 88+ Teams chats
+- Email monitoring working with full metadata
+- Robust selector fallbacks for UI resilience
+
+**Documentation**: See `client-monitoring/README.md` for complete setup and usage guide
+
+**Use Case**: When you need to monitor a client's Teams/Outlook without backend API access. Perfect for client support scenarios where you need visibility into communications but don't have admin permissions.
+
 ---
 
 ### Family Projects (`/family`)

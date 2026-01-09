@@ -1,0 +1,170 @@
+#!/usr/bin/env python3
+"""
+Process files in the import directory.
+
+Usage:
+    ./process-imports              # Basic routing (project name detection)
+    ./process-imports --ai         # AI-powered analysis (extracts tasks, decisions, updates)
+    ./process-imports --status     # Show import status only
+    ./process-imports --manual     # Manual review interface (future)
+
+AI Mode (--ai):
+    Requires: ANTHROPIC_API_KEY environment variable
+    Analyzes content and extracts:
+    - Tasks → adds to tasks.md
+    - Decisions → adds to PROJECT.md Recent Updates
+    - Updates → adds to PROJECT.md status
+    - Unmatched content → routes to holding project
+"""
+import sys
+from pathlib import Path
+
+# Add src to path
+sys.path.insert(0, str(Path(__file__).parent / "src"))
+
+from import_processor import ImportProcessor, create_import_dir_readme
+
+
+def main():
+    """Main entry point"""
+    projects_dir = Path.home() / "projects"
+    import_dir = projects_dir / "import"
+
+    # Ensure import directory exists
+    import_dir.mkdir(parents=True, exist_ok=True)
+
+    # Create README if it doesn't exist
+    readme_path = import_dir / "README.md"
+    if not readme_path.exists():
+        create_import_dir_readme(import_dir)
+        print(f"✓ Created import directory: {import_dir}")
+        print(f"✓ Created README: {readme_path}")
+
+    # Initialize processor
+    processor = ImportProcessor(import_dir, projects_dir)
+
+    # Parse arguments
+    manual_mode = "--manual" in sys.argv
+    status_only = "--status" in sys.argv
+    ai_mode = "--ai" in sys.argv
+
+    # Scan for files
+    import_files = processor.scan_import_directory()
+
+    if not import_files:
+        print("\n📥 Import directory is empty")
+        print(f"   Drop files in: {import_dir}")
+        return
+
+    print(f"\n📥 Found {len(import_files)} file(s) in import directory\n")
+
+    # Status only mode
+    if status_only:
+        for import_file in import_files:
+            print(f"📄 {import_file.filename}")
+            if import_file.mentions:
+                print(f"   Projects detected: {len(import_file.mentions)}")
+                for mention in import_file.mentions:
+                    conf_pct = int(mention.confidence * 100)
+                    print(f"     • {mention.project_name} ({conf_pct}% confidence, {mention.source})")
+            else:
+                print(f"   ⚠️  No projects detected - needs manual review")
+            print()
+        return
+
+    # Manual mode
+    if manual_mode:
+        print("Manual review mode not yet implemented.")
+        print("For now, use AI mode (--ai) or basic routing.")
+        return
+
+    # AI processing mode
+    if ai_mode:
+        import os
+        if not os.environ.get('ANTHROPIC_API_KEY'):
+            print("❌ ERROR: ANTHROPIC_API_KEY environment variable not set")
+            print("\nAI mode requires Claude API access.")
+            print("Set your API key: export ANTHROPIC_API_KEY='your-key-here'")
+            return
+
+        print("🤖 Processing with AI analysis...\n")
+        print("This will:")
+        print("  - Analyze content for tasks, decisions, and updates")
+        print("  - Extract structured data from unstructured text")
+        print("  - Route content to appropriate projects")
+        print("  - Update tasks.md and PROJECT.md files")
+        print()
+
+        try:
+            summary = processor.process_all(use_ai=True)
+
+            # Display AI results
+            print("=" * 60)
+            print("AI PROCESSING SUMMARY")
+            print("=" * 60)
+            print(f"Total files:        {summary['total_files']}")
+            print(f"Analyzed:           {summary['analyzed']}")
+            print(f"Tasks added:        {summary['tasks_added']}")
+            print(f"Decisions added:    {summary['decisions_added']}")
+            print(f"Updates applied:    {summary['updates_applied']}")
+            print(f"Projects updated:   {len(summary['projects_updated'])}")
+            if summary['projects_updated']:
+                for project in summary['projects_updated']:
+                    print(f"  • {project}")
+            print(f"Holding items:      {summary['holding_items']}")
+            print()
+
+            if summary['errors']:
+                print("⚠️  Errors:")
+                for error in summary['errors']:
+                    print(f"  • {error}")
+                print()
+
+            if summary['results']:
+                print("Details:")
+                print("-" * 60)
+                for result in summary['results']:
+                    print(f"📄 {result['filename']}")
+                    print(f"   Tasks: {result['tasks']}, Decisions: {result['decisions']}, Updates: {result['updates']}")
+                    if result['projects']:
+                        print(f"   Projects: {', '.join(result['projects'])}")
+                    print()
+
+        except Exception as e:
+            print(f"❌ ERROR: {e}")
+            return
+
+        return
+
+    # Basic auto-routing mode (no AI)
+    print("Processing with basic auto-routing (use --ai for intelligent analysis)...\n")
+    summary = processor.process_all(auto_route=True, use_ai=False)
+
+    # Display results
+    print("=" * 60)
+    print("IMPORT PROCESSING SUMMARY")
+    print("=" * 60)
+    print(f"Total files:        {summary['total_files']}")
+    print(f"Auto-routed:        {summary['auto_routed']}")
+    print(f"Manual review:      {summary['manual_review']}")
+    print(f"No mentions:        {summary['no_mentions']}")
+    print()
+
+    if summary['results']:
+        print("Details:")
+        print("-" * 60)
+        for result in summary['results']:
+            print(f"📄 {result['filename']}")
+            if result['routed_to']:
+                print(f"   ✓ Routed to: {', '.join(result['routed_to'])}")
+            elif result['requires_manual']:
+                print(f"   ⚠️  {result.get('reason', 'Requires manual review')}")
+            print()
+
+    if summary['manual_review'] > 0 or summary['no_mentions'] > 0:
+        print("\n💡 Tip: Use --ai mode for intelligent content analysis")
+        print("   Or move files manually to appropriate project's meeting-notes/ folder")
+
+
+if __name__ == "__main__":
+    main()

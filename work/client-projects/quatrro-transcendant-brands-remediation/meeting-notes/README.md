@@ -252,6 +252,56 @@ This folder contains transcriptions and notes from all meetings related to the Q
 
 ---
 
+### 2025-12-30: Service Credit Approval Notification
+**File**: [2025-12-30-service-credit-approval-notification.md](./2025-12-30-service-credit-approval-notification.md)
+
+**Type**: 🎉 EMAIL - MAJOR BREAKTHROUGH
+**Time**: 12:23 PM ET (17:23 UTC)
+**From**: Jason Pace (Quatrro Senior Leadership)
+**To**:
+- Paul Hurley (Transcendant CFO/Controller)
+- John Lavigne (Transcendant Accounting Manager)
+
+**Subject**: Status of Service Credit Approval
+
+**Major Announcement**:
+✅ **SERVICE CREDIT APPROVED** - Full one-month credit (~$10,000) approved by Quatrro CFO (Yogesh) and CEO (Nate)
+
+**Key Messages**:
+1. **Credit Approved**: Full approval received for one-month service credit
+2. **Processing Details**: Looking into how credit gets recognized, waiting on CFO for procedure
+3. **Payment Status**: Requesting update on November ACH payment (declined or pending?)
+4. **LeaseCake Update**: Using "bottom up" refresh with AI OCR tool for lease abstractions
+5. **Action Needed**: Client to locate lease contracts for OCR processing (Dropbox link to follow)
+
+**Client Response**:
+- Paul Hurley: Out-of-office auto-reply (returning January 2, 2026)
+- John Lavigne: No immediate response (also on PTO)
+
+**Significance**:
+- **Swift Action**: Credit approved within 7 days of request (Dec 23 → Dec 30)
+- **Client Preference Honored**: Simple resolution without lengthy 90-day analysis
+- **Demonstrates Commitment**: Executive-level approval shows seriousness about relationship repair
+- **Major Milestone**: First concrete deliverable in remediation plan
+
+**Timeline Context**:
+- Dec 23: Credit requested during CEO meeting
+- Dec 24-Jan 1: Holiday period, limited client availability
+- Dec 30: Credit approval communicated (this email)
+- Jan 2: Paul returns, expected response
+- Jan 11: P12 close deadline (first test of improvements)
+
+**Action Items**:
+- ⏳ CFO (Yogesh) to provide procedure for applying credit
+- ⏳ Client to update on November ACH payment status
+- ⏳ Client to locate and prepare lease contracts
+- ⏳ Provide Dropbox link for lease contract uploads
+- 📅 Follow up with Paul on January 2
+
+**Tone**: Positive, professional, action-oriented, forward-looking
+
+---
+
 ## October-November 2024 Meetings (Imported from HubSpot)
 
 ### 2024-10-09: R365 EDI Follow Up
@@ -309,8 +359,8 @@ This folder contains transcriptions and notes from all meetings related to the Q
 
 ---
 
-### 2025-12-18: Transcendent - Leasecake & R365 Update (HubSpot Recording)
-**File**: [2025-12-18-transcendent-leasecake-r365-update-hubspot.md](./2025-12-18-transcendent-leasecake-r365-update-hubspot.md)
+### 2024-12-18: Transcendent - Leasecake & R365 Update (HubSpot Recording)
+**File**: [2024-12-18-transcendent-leasecake-r365-update.md](./2024-12-18-transcendent-leasecake-r365-update.md)
 
 **Type**: CALL with Recording 🎥 (Imported from HubSpot)
 **Duration**: 32 minutes
@@ -339,6 +389,7 @@ This folder contains transcriptions and notes from all meetings related to the Q
 | Dec 18 | Crisis Escalation | 🔴 Critical | Escalated to Jason, client threatens non-payment |
 | Dec 22 | Operations | ⚪ Neutral | P12 planning, PTO schedules |
 | Dec 23 | CEO Remediation | 🟡 Serious | Credit requested, LeaseCake approved, commitment to fix |
+| Dec 30 | Email Notification | 🎉 Breakthrough | Service credit approved, remediation milestone achieved |
 
 ---
 
@@ -361,6 +412,7 @@ This folder contains transcriptions and notes from all meetings related to the Q
 - **Dec 18**: CRITICAL (2/10) - threatened non-payment, contract breach discussion
 - **Dec 22**: Neutral (4/10) - procedural, no major issues discussed
 - **Dec 23**: Stabilizing (5/10) - executive involvement, remedies proposed, cautious optimism
+- **Dec 30**: Improving (6/10) - credit approved, concrete action, commitment demonstrated
 
 ### EDI Integration Status
 - **Dec 1**: Approved, pilot selected, ticket submitted (optimistic)
@@ -406,14 +458,16 @@ This folder contains transcriptions and notes from all meetings related to the Q
 
 ---
 
-## Next Steps (As of Dec 23)
+## Next Steps (As of Dec 30)
 
 ### Immediate (Next 7 Days)
-1. ⏳ Credit approval decision from CFO/CEO
-2. ⏳ November invoice resolution
-3. 📋 Root cause analysis completion
-4. 📋 Personnel evaluation and decisions
-5. 📋 Cash over short process documentation
+1. ✅ Credit approval decision from CFO/CEO (COMPLETE - Approved Dec 30)
+2. ⏳ Finalize credit application procedure (waiting on CFO Yogesh)
+3. ⏳ November invoice resolution (awaiting Paul's return Jan 2)
+4. ⏳ Receive lease contracts from client for LeaseCake OCR
+5. 📋 Root cause analysis completion
+6. 📋 Personnel evaluation and decisions
+7. 📋 Cash over short process documentation
 
 ### Post-Holiday (Early January)
 1. 📅 LeaseCake kickoff meeting
@@ -472,9 +526,9 @@ Date/Time/Purpose
 
 ---
 
-**README Last Updated**: 2025-12-29 (HubSpot Sync)
-**Total Meetings Documented**: 9 (4 original + 5 from HubSpot)
-**Date Range**: October 9, 2024 - December 23, 2025
+**README Last Updated**: 2025-12-30
+**Total Meetings/Communications Documented**: 10 (5 original + 5 from HubSpot)
+**Date Range**: October 9, 2024 - December 30, 2025
 **Project Phase**: Active Remediation
-**Relationship Status**: 🔴 CRITICAL - Stabilizing
-**HubSpot Integration**: Active (Last sync: 2025-12-29)
+**Relationship Status**: 🟡 AT-RISK - Improving (Credit Approved)
+**HubSpot Integration**: Active (Last sync: 2025-12-30)
