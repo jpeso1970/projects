@@ -70,6 +70,7 @@ def render_help_modal(stdscr):
         ("Tasks Pane", [
             ("Space", "Toggle task completion ([ ] ↔ [✓])"),
             ("d", "Delete selected task"),
+            ("m", "Move task to another project"),
             ("u", "Undo last task deletion (in tasks pane)"),
         ]),
         ("Import History", [

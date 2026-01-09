@@ -14,10 +14,12 @@ from .views.three_pane_view import render_three_pane_view
 from .views.imports_view import render_imports_modal, process_imports_with_feedback
 # from .views.review_view import render_review_modal  # PHASE 1: Removed staging/review workflow
 from .views.import_history_view import render_import_history_modal, show_undo_result  # PHASE 2: Undo system
+from .views.task_move_view import render_project_picker, show_move_result  # PHASE 3: Task move/reassign
 from .views.help_view import render_help_modal
 from .task_parser import parse_tasks_file, toggle_task_completion, delete_task, undo_task_deletion
 from .import_processor import create_import_dir_readme, ImportProcessor
 from .import_history import ImportHistory  # PHASE 2: Import history
+from .task_manager import TaskManager  # PHASE 3: Task management
 # from .staging import StagingManager  # PHASE 1: Staging system removed
 
 
@@ -302,6 +304,50 @@ def main_loop(stdscr):
                             tasks = parse_tasks_file(tasks_file)
 
                 needs_render = True
+
+        elif key == ord('m') or key == ord('M'):  # Move task key
+            # PHASE 3: Move task to another project (only in tasks pane)
+            if active_pane == "tasks" and tasks and selected_task_idx < len(tasks):
+                current_project = projects[selected_project_idx]
+                task = tasks[selected_task_idx]
+                tasks_file = current_project.project_dir / "tasks.md"
+
+                # Show project picker
+                dest_project_name = render_project_picker(
+                    stdscr, all_projects, current_project.name, action="move"
+                )
+
+                if dest_project_name:
+                    # Initialize task manager
+                    task_manager = TaskManager(projects_root)
+
+                    # Get full task info for moving
+                    task_to_move = task_manager.get_task_from_line(
+                        tasks_file, task.text, current_project.name
+                    )
+
+                    if task_to_move:
+                        # Perform move
+                        result = task_manager.move_task(task_to_move, dest_project_name)
+
+                        # Show result
+                        show_move_result(stdscr, result, action="move")
+
+                        if result.get('success'):
+                            # Reload projects and tasks
+                            all_projects = load_all_projects()
+                            projects = apply_filter_and_sort(all_projects, filter_by, sort_by)
+
+                            # Reload tasks for current project
+                            if projects and selected_project_idx < len(projects):
+                                tasks_file = projects[selected_project_idx].project_dir / "tasks.md"
+                                tasks = parse_tasks_file(tasks_file)
+
+                                # Adjust selection
+                                if selected_task_idx >= len(tasks):
+                                    selected_task_idx = max(0, len(tasks) - 1)
+
+                    needs_render = True
 
         elif key == ord('s') or key == ord('S'):
             # Cycle through sort options (only in projects pane)
