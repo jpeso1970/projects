@@ -60,7 +60,7 @@ def main_loop(stdscr):
     # Application state
     selected_project_idx = 0
     selected_task_idx = 0
-    active_pane = "projects"  # Can be: "projects" or "tasks" (summary is view-only)
+    active_pane = "projects"  # Can be: "projects", "tasks", or "summary"
     sort_by = "priority"  # Can be: priority, category, due_date, last_updated, name, risk
     filter_by = "all"  # Can be: all, active, blocked, work, personal, development, family, high
     deletion_history = []  # Stack of deleted tasks for undo
@@ -158,15 +158,20 @@ def main_loop(stdscr):
             break
 
         elif key == ord('\t'):  # Tab key
-            # Toggle between projects and tasks (summary is view-only)
+            # Toggle between projects and tasks (use 'p' for summary)
             if active_pane == "projects":
                 active_pane = "tasks"
             else:  # tasks or summary
                 active_pane = "projects"
             needs_render = True
 
+        elif key == ord('p') or key == ord('P'):
+            # Switch to summary pane
+            active_pane = "summary"
+            needs_render = True
+
         elif key == curses.KEY_UP or key == ord('k'):
-            # Move selection up
+            # Move selection up or scroll summary
             if active_pane == "projects":
                 if selected_project_idx > 0:
                     selected_project_idx -= 1
@@ -176,13 +181,18 @@ def main_loop(stdscr):
                     selected_task_idx = 0
                     summary_scroll_offset = 0  # Reset summary scroll
                     needs_render = True
+            elif active_pane == "summary":
+                # Scroll summary pane up
+                if summary_scroll_offset > 0:
+                    summary_scroll_offset -= 1
+                    needs_render = True
             else:  # tasks pane
                 if selected_task_idx > 0:
                     selected_task_idx -= 1
                     needs_render = True
 
         elif key == curses.KEY_DOWN or key == ord('j'):
-            # Move selection down
+            # Move selection down or scroll summary
             if active_pane == "projects":
                 if selected_project_idx < len(projects) - 1:
                     selected_project_idx += 1
@@ -192,6 +202,10 @@ def main_loop(stdscr):
                     selected_task_idx = 0
                     summary_scroll_offset = 0  # Reset summary scroll
                     needs_render = True
+            elif active_pane == "summary":
+                # Scroll summary pane down (bounds-checked in render function)
+                summary_scroll_offset += 1
+                needs_render = True
             else:  # tasks pane
                 if selected_task_idx < len(tasks) - 1:
                     selected_task_idx += 1
@@ -332,20 +346,6 @@ def main_loop(stdscr):
                 stdscr.addstr(0, 0, f"Error refreshing: {e}", curses.A_BOLD)
                 stdscr.refresh()
                 curses.napms(2000)
-                needs_render = True
-
-        elif key == ord('[') or key == curses.KEY_PPAGE:
-            # Scroll summary pane up (when in projects pane)
-            if active_pane == "projects":
-                if summary_scroll_offset > 0:
-                    summary_scroll_offset -= 1
-                    needs_render = True
-
-        elif key == ord(']') or key == curses.KEY_NPAGE:
-            # Scroll summary pane down (when in projects pane)
-            if active_pane == "projects":
-                # Allow scrolling down (will be bounds-checked in render function)
-                summary_scroll_offset += 1
                 needs_render = True
 
         elif key == curses.KEY_HOME:

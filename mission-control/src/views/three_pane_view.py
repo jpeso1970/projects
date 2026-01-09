@@ -393,9 +393,11 @@ def draw_footer(stdscr, height: int, width: int, active_pane: str):
     footer_y = height - 1
 
     if active_pane == "projects":
-        footer = "[↑↓] Navigate  [Tab] Tasks  [s] Sort  [f] Filter  [i] Imports  [?] Help  [q] Quit"
-    else:  # tasks (summary is not directly accessible)
-        footer = "[↑↓] Navigate  [Tab] Projects  [Space] Toggle  [d] Delete  [u] Undo  [?] Help  [q] Quit"
+        footer = "[↑↓] Navigate  [Tab] Tasks  [p] Summary  [s] Sort  [f] Filter  [?] Help  [q] Quit"
+    elif active_pane == "summary":
+        footer = "[↑↓] Scroll  [Tab] Projects  [p] Stay  [?] Help  [q] Quit"
+    else:  # tasks
+        footer = "[↑↓] Navigate  [Tab] Projects  [p] Summary  [Space] Toggle  [d] Delete  [u] Undo  [?] Help  [q] Quit"
 
     try:
         stdscr.addstr(footer_y, 0, footer[:width], curses.color_pair(COLOR_HEADER))

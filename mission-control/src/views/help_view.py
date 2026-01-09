@@ -53,15 +53,19 @@ def render_help_modal(stdscr):
 
     sections = [
         ("Navigation", [
-            ("↑/↓ or k/j", "Move selection up/down"),
+            ("↑/↓ or k/j", "Navigate list or scroll summary"),
             ("Tab", "Switch between Projects and Tasks panes"),
+            ("p", "Switch to Project Summary pane"),
             ("Home/End", "Jump to first/last item"),
-            ("[/]", "Scroll summary pane up/down"),
         ]),
         ("Projects Pane", [
             ("s", "Cycle sort: priority → category → due → updated → name → risk"),
             ("f", "Cycle filter: all → active → blocked → work → personal → dev → family → high"),
             ("r", "Refresh all data from disk"),
+        ]),
+        ("Summary Pane", [
+            ("↑/↓ or k/j", "Scroll summary content up/down"),
+            ("Tab", "Return to Projects pane"),
         ]),
         ("Tasks Pane", [
             ("Space", "Toggle task completion ([ ] ↔ [✓])"),
