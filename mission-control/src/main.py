@@ -176,7 +176,7 @@ def main_loop(stdscr):
             active_pane = "summary"
             needs_render = True
 
-        elif key == curses.KEY_UP or key == ord('k'):
+        elif key == curses.KEY_UP or key == ord('k') or key == ord('K'):
             # Move selection up or scroll summary
             if active_pane == "projects":
                 if selected_project_idx > 0:
@@ -197,7 +197,7 @@ def main_loop(stdscr):
                     selected_task_idx -= 1
                     needs_render = True
 
-        elif key == curses.KEY_DOWN or key == ord('j'):
+        elif key == curses.KEY_DOWN or key == ord('j') or key == ord('J'):
             # Move selection down or scroll summary
             if active_pane == "projects":
                 if selected_project_idx < len(projects) - 1:
