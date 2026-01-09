@@ -10,7 +10,7 @@ priority: "high"
 created: 2025-12-30
 due: 2025-03-31
 completed: null
-last_updated: 2025-12-30
+last_updated: 2026-01-08
 
 # Tags (array)
 tags:
@@ -74,6 +74,12 @@ auto_archive_on_complete: true
 **Last Updated**: 2025-12-30
 
 ### Recent Updates
+- 2026-01-08: ⚠️ Multiple missed audit deadlines and balance sheet reconciliation issues - Uno's auditors set multiple deadlines for final trial balance, all missed. OPS team doesn't understand account nature or proper reconciliation requirements. System-generated trial balance is actually consolidated balance sheet, masking problem areas. Account considered at risk due to board pressure on Kim. (from MEETING_AI Summary Notes from Meeting_20260108-194018.txt)
+- 2026-01-08: Jason suggested escalating Uno's systemic problems to higher management (Sudarshan, Murli, Nitin) to address ongoing issues (from MEETING_AI Summary Notes from Meeting_20260108-194018.txt)
+- 2026-01-08: ⚠️ Multiple missed audit deadlines and balance sheet reconciliation failures creating board pressure - Uno's auditors have missed multiple deadlines for final trial balance delivery. OPS team lacks understanding of account reconciliation requirements. System generates consolidated balance sheet instead of detailed trial balance, masking problem areas. Account considered at risk with significant board pressure on Kim. (from MEETING_AI Summary Notes from Meeting_20260108-194018.txt)
+- 2026-01-08: Decision to escalate Uno's systemic problems to higher management due to ineffective previous resolutions at OPS team level (from MEETING_AI Summary Notes from Meeting_20260108-194018.txt)
+- 2026-01-08: ⚠️ Client at risk due to internal challenges - Uno's controller has minimal accounting experience but reports directly to board. Client desperate for best practices guidance and struggling with service issues. (from Budget Discussion_Planning.docx)
+- 2026-01-08: ⚠️ Critical situation with multiple missed deadlines - Missed several auditor deadlines for final trial balance. Client extremely frustrated with negative account balances and lack of proper reconciliation. Need immediate war room approach. (from MUC Key Accounts at Risk - Weekly Call.docx)
 - 2025-12-30: Project initiated, will sync with HubSpot for client data
 
 ### Next Steps

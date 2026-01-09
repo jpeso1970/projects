@@ -28,47 +28,39 @@
 ## Active Tasks
 
 ### High Priority
-- [ ] Task 1 - Description
-  - Due: 2025-01-31
-  - Assignee: Name
-  - Notes: Additional context
-
-- [ ] Task 2 - Description
-  - Due: 2025-02-15
-  - Assignee: Name
+- [ ] Add labor cost percentage metric to dashboard
+  - Due: 2026-01-25
+  - Context: Requested enhancement by Jennifer from Poke House (from 2026-01-08-weekly-client-sync.md)
 
 ### Medium Priority
-- [ ] Task 3 - Description
-- [ ] Task 4 - Description
+- [ ] Research mobile-responsive design options
+  - Assignee: Jason
+  - Context: Request for mobile-responsive version of dashboard (from 2026-01-08-weekly-client-sync.md)
 
 ### Low Priority
-- [ ] Task 5 - Description
-- [ ] Task 6 - Description
+- [ ] Schedule follow-up demo for new features
+  - Context: To showcase upcoming enhancements (from 2026-01-08-weekly-client-sync.md)
+
+- [ ] Implement food waste tracking module
+  - Due: 2026-02-10
+  - Context: Additional KPI metric requested by Poke House (from 2026-01-08-weekly-client-sync.md)
+
 
 ---
 
 ## Blocked Tasks
 
-### Task Name
-- **Blocked by**: What's blocking this
-- **Resolution needed**: What needs to happen
-- **Owner**: Who should resolve
 
 ---
 
 ## Backlog
 
 ### Future Tasks (Not Yet Scheduled)
-- [ ] Backlog item 1
-- [ ] Backlog item 2
-- [ ] Backlog item 3
-
 ---
 
 ## Completed Tasks
 
 ### Week of 2025-01-15
-- [✓] Example completed task - Completed 2025-01-15
 
 ---
 

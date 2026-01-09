@@ -10,7 +10,7 @@ priority: "high"
 created: 2025-12-28
 due: 2026-02-15
 completed: null
-last_updated: 2025-12-30
+last_updated: 2026-01-08
 
 # Tags (array)
 tags:
@@ -94,6 +94,17 @@ auto_archive_on_complete: true
 - Year-end close approaching with high anxiety
 
 ### Recent Updates
+- 2026-01-08: • Multiple ongoing issues including cash shortages, turnaround speed, and coding questions - Key concerns identified: speed of turnaround, repeated coding questions, lease understanding issues, and ongoing cash shortage related to Xennial migration. Team working on cash shortage file using standardized methodology. (from MEETING_client remediation meeting w Jeri_20260108-194342.txt)
+- 2026-01-08: Any unresolved cash shortages will be considered operational issues for John to address (from MEETING_client remediation meeting w Jeri_20260108-194342.txt)
+- 2026-01-08: Team will use John's file as standard template and methodology for all remediation procedures to ensure consistency and accountability (from MEETING_client remediation meeting w Jeri_20260108-194342.txt)
+- 2026-01-08: • Mixed progress with R365 challenges but LeaseCake integration successful - R365 API changes causing sync delays but LeaseCake integration performing above expectations. Overall trajectory is positive. (from 2026-01-08-weekly-client-sync.md)
+- 2026-01-08: Approved rollout timeline for February 1st (from 2026-01-08-weekly-client-sync.md)
+- 2026-01-08: Decided to implement fallback sync mechanism for R365 (from 2026-01-08-weekly-client-sync.md)
+- 2026-01-08: ✓ Trending positive with new leadership structure - Client happy with corrective steps, Syed being introduced as new senior manager, lease accounting implementation proceeding. (from MUC Key Accounts at Risk - Weekly Call.docx)
+- 2026-01-08: Change client expectations for Restaurant 365 visibility rather than changing internal processes (from MUC Key Accounts at Risk - Weekly Call.docx)
+- 2026-01-08: • Mixed progress with R365 challenges but overall positive trajectory - R365 API changes causing sync delays, but LeaseCake integration performing above expectations. Planning rollout to 10 more locations. (from 2026-01-08-weekly-client-sync.md)
+- 2026-01-08: Approved rollout timeline for February 1st (from 2026-01-08-weekly-client-sync.md)
+- 2026-01-08: Decided to implement fallback sync mechanism for R365 (from 2026-01-08-weekly-client-sync.md)
 
 **December 30, 2025 (MAJOR BREAKTHROUGH - Credit Approved)**:
 - ✅ **SERVICE CREDIT APPROVED** - Full one-month credit (~$10,000) approved by CFO/CEO

@@ -10,7 +10,7 @@ priority: "high"
 created: 2026-01-05
 due: null
 completed: null
-last_updated: 2026-01-05
+last_updated: 2026-01-08
 
 # Tags (array)
 tags:
@@ -66,6 +66,8 @@ auto_archive_on_complete: true
 **Last Updated**: 2026-01-05
 
 ### Recent Updates
+- 2026-01-08: ⚠️ Planning to terminate Q1 2026 - Long-term plan to go in-house, IT outage accelerated timeline. Likely loss. (from MUC Key Accounts at Risk - Weekly Call.docx)
+- 2026-01-08: Miller's Ale House and Genesis will likely terminate due to IT outage impact (from MUC Key Accounts at Risk - Weekly Call.docx)
 - 2026-01-05: Project initiated with HubSpot integration planned
 
 ### Next Steps

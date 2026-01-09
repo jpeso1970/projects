@@ -28,47 +28,33 @@
 ## Active Tasks
 
 ### High Priority
-- [ ] Task 1 - Description
-  - Due: 2025-01-31
-  - Assignee: Name
-  - Notes: Additional context
+- [ ] Send follow-up email to Merli and Ganesh regarding status of NRP account and any recent meetings or updates since October
+  - Assignee: Jason
+  - Context: Addressing lack of progress and missed meetings (from MEETING_client remediation meeting w Jeri_20260108-194342.txt)
 
-- [ ] Task 2 - Description
-  - Due: 2025-02-15
-  - Assignee: Name
+- [ ] Introduce Jerry to NRP account
+  - Context: Has been pending since December, needed for account management (from MUC Key Accounts at Risk - Weekly Call.docx)
+
 
 ### Medium Priority
-- [ ] Task 3 - Description
-- [ ] Task 4 - Description
 
 ### Low Priority
-- [ ] Task 5 - Description
-- [ ] Task 6 - Description
 
 ---
 
 ## Blocked Tasks
 
-### Task Name
-- **Blocked by**: What's blocking this
-- **Resolution needed**: What needs to happen
-- **Owner**: Who should resolve
 
 ---
 
 ## Backlog
 
 ### Future Tasks (Not Yet Scheduled)
-- [ ] Backlog item 1
-- [ ] Backlog item 2
-- [ ] Backlog item 3
-
 ---
 
 ## Completed Tasks
 
 ### Week of 2025-01-15
-- [✓] Example completed task - Completed 2025-01-15
 
 ---
 

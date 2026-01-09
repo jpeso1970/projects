@@ -10,7 +10,7 @@ priority: "high"
 created: 2026-01-05
 due: null
 completed: null
-last_updated: 2026-01-05
+last_updated: 2026-01-08
 
 # Tags (array)
 tags:
@@ -66,6 +66,7 @@ auto_archive_on_complete: true
 **Last Updated**: 2026-01-05
 
 ### Recent Updates
+- 2026-01-08: Burgerville will either terminate entirely or keep partial business during Restaurant 365 migration (from MUC Key Accounts at Risk - Weekly Call.docx)
 - 2026-01-05: Project initiated with HubSpot integration planned
 
 ### Next Steps

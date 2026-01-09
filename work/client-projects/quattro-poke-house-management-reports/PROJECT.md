@@ -10,7 +10,7 @@ priority: "high"
 created: 2025-12-29
 due: null
 completed: null
-last_updated: 2025-12-30
+last_updated: 2026-01-08
 
 # Tags (array)
 tags:
@@ -73,6 +73,12 @@ auto_archive_on_complete: true
 **Last Updated**: 2025-12-29
 
 ### Recent Updates
+- 2026-01-08: ✓ High adoption rate with 12 managers using dashboard daily - Dashboard has excellent user adoption with daily usage by 12 managers. Client excited about functionality and providing enhancement feedback. Overall very satisfied. (from 2026-01-08-weekly-client-sync.md)
+- 2026-01-08: Will prioritize labor cost metric over other enhancements (from 2026-01-08-weekly-client-sync.md)
+- 2026-01-08: Approved scope expansion for mobile version (from 2026-01-08-weekly-client-sync.md)
+- 2026-01-08: ✓ High dashboard adoption with enhancement requests - 12 managers using dashboard daily. Client very satisfied but requesting mobile version and additional KPI metrics including labor cost % and food waste tracking. (from 2026-01-08-weekly-client-sync.md)
+- 2026-01-08: Will prioritize labor cost metric over other enhancements (from 2026-01-08-weekly-client-sync.md)
+- 2026-01-08: Approved scope expansion for mobile version (from 2026-01-08-weekly-client-sync.md)
 - 2025-12-29: Project initiated and HubSpot data synced successfully
 
 ### Next Steps

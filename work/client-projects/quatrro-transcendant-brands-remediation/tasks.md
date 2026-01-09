@@ -449,3 +449,53 @@
 **Next Review**: 2026-01-02 (P12 close begins)
 **Owner**: Jason Pace (overall), Jeri Snyder (day-to-day)
 **Status**: 🔴 CRITICAL - Multiple high-priority tasks must succeed
+
+
+## Imported Tasks
+
+### High Priority
+- [ ] Send email to Ganesh and Sudarshan (copying Jeri) to request status update on Transcendent account regarding expected delivery of basic account deliverables and involvement of new team members
+  - Assignee: Jason
+  - Context: Follow-up task from client remediation meeting (from MEETING_client remediation meeting w Jeri_20260108-194342.txt)
+
+- [ ] Debug R365 API sync delays
+  - Assignee: Jason
+  - Due: 2026-01-12
+  - Context: API changes causing sync delays for Transcendent Brands (from 2026-01-08-weekly-client-sync.md)
+
+- [ ] Formally introduce Syed as new senior manager for Transcendent Brands
+  - Assignee: Ganesh Chavan
+  - Context: Resource reorganization promised to client for better quality control (from MUC Key Accounts at Risk - Weekly Call.docx)
+
+
+## Imported Tasks
+
+### Medium Priority
+- [ ] Review cash shortage file before sharing with John, using John's file as template for next entry
+  - Assignee: Ajay and Pratik
+  - Context: File due by end of week or early next week (from MEETING_client remediation meeting w Jeri_20260108-194342.txt)
+
+- [ ] Send internal email to Merly and Sudarshan (copying Jeri) to request update on when new teammates will be added to Transcendent account
+  - Assignee: Jason
+  - Context: Addressing operational staffing concerns (from MEETING_client remediation meeting w Jeri_20260108-194342.txt)
+
+- [ ] Send update to Paul and John (copying Jeri and Jeff) about status of lease accounting software licensing agreement and expected timeline for completion
+  - Assignee: Jason
+  - Context: Lease Cake software licensing pending CFO signature (from MEETING_client remediation meeting w Jeri_20260108-194342.txt)
+
+- [ ] Prepare rollout plan for 10 new locations
+  - Assignee: Mike
+  - Context: Planning rollout for 10 more Transcendent Brands locations (from 2026-01-08-weekly-client-sync.md)
+
+- [ ] Create comprehensive error handling documentation
+  - Due: 2026-01-18
+  - Context: Team needs additional documentation on error handling procedures (from 2026-01-08-weekly-client-sync.md)
+
+- [ ] Implement lease cake for lease accounting at Transcendent Brands
+  - Context: Part of promised improvements to client service (from MUC Key Accounts at Risk - Weekly Call.docx)
+
+
+## Imported Tasks
+
+### Low Priority
+

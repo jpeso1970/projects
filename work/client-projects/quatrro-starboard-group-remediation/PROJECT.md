@@ -10,7 +10,7 @@ priority: "high"
 created: 2026-01-05
 due: null
 completed: null
-last_updated: 2026-01-05
+last_updated: 2026-01-08
 
 # Tags (array)
 tags:
@@ -66,6 +66,8 @@ auto_archive_on_complete: true
 **Last Updated**: 2026-01-05
 
 ### Recent Updates
+- 2026-01-08: ✓ Sufficient lease data collected, ready for implementation pending agreement signature - Lease data has been gathered for open locations and is ready for Lease Cake implementation once agreement is signed. (from MEETING_client remediation meeting w Jeri_20260108-194342.txt)
+- 2026-01-08: ⚠️ Remains at risk - Jerry maintaining oversight, still needs attention. (from MUC Key Accounts at Risk - Weekly Call.docx)
 - 2026-01-05: Project initiated with HubSpot integration planned
 
 ### Next Steps

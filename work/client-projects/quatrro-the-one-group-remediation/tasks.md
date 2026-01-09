@@ -28,47 +28,44 @@
 ## Active Tasks
 
 ### High Priority
-- [ ] Task 1 - Description
-  - Due: 2025-01-31
-  - Assignee: Name
-  - Notes: Additional context
+- [ ] Escalate the issues with Suraj's performance and the AP process to OPS upper management to ensure appropriate action is taken and client trust is restored
+  - Assignee: JJ
+  - Context: Follow-up task to address One Group AP process concerns (from MEETING_AI Summary Notes from Meeting_20260108-194018.txt)
 
-- [ ] Task 2 - Description
-  - Due: 2025-02-15
-  - Assignee: Name
+- [ ] Escalate the issues with Suraj's performance and the AP process to OPS upper management to ensure appropriate action is taken and client trust is restored
+  - Assignee: JJ
+  - Context: Follow-up task to address One Group AP process concerns (from MEETING_AI Summary Notes from Meeting_20260108-194018.txt)
+
+- [ ] Investigate inventory discrepancy in Boston location
+  - Due: 2026-01-15
+  - Context: Found during data migration for The ONE Group (from 2026-01-08-weekly-client-sync.md)
 
 ### Medium Priority
-- [ ] Task 3 - Description
-- [ ] Task 4 - Description
+- [ ] Schedule testing phase kickoff meeting
+  - Due: 2026-01-20
+  - Context: Follow-up to approved additional testing phase (from 2026-01-08-weekly-client-sync.md)
+
+- [ ] Set up automated weekly status reports for Sarah
+  - Assignee: Jason
+  - Context: Requested by Sarah Chen from The ONE Group (from 2026-01-08-weekly-client-sync.md)
 
 ### Low Priority
-- [ ] Task 5 - Description
-- [ ] Task 6 - Description
 
 ---
 
 ## Blocked Tasks
 
-### Task Name
-- **Blocked by**: What's blocking this
-- **Resolution needed**: What needs to happen
-- **Owner**: Who should resolve
 
 ---
 
 ## Backlog
 
 ### Future Tasks (Not Yet Scheduled)
-- [ ] Backlog item 1
-- [ ] Backlog item 2
-- [ ] Backlog item 3
-
 ---
 
 ## Completed Tasks
 
 ### Week of 2025-12-29
-- [✓] Project structure created and HubSpot integration planned - Completed 2025-12-29
 
 ---
 

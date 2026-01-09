@@ -10,7 +10,7 @@ priority: "high"
 created: 2025-12-29
 due: null
 completed: null
-last_updated: 2026-01-07
+last_updated: 2026-01-08
 
 # Tags (array)
 tags:
@@ -72,6 +72,16 @@ auto_archive_on_complete: true
 **Last Updated**: 2025-12-29
 
 ### Recent Updates
+- 2026-01-08: ⚠️ AP process failures and trust issues with client - Major challenges with AP timeliness, accuracy, and completeness. Suraj is unresponsive to feedback and damaged trust by talking over client's CFO. Client considering hiring AP manager and has withdrawn services in past due to trust issues. Generic checklist provided didn't address client needs. (from MEETING_AI Summary Notes from Meeting_20260108-194018.txt)
+- 2026-01-08: JJ admitted that The One Group issues have not yet been escalated to OPS upper management due to uncertainty about the escalation process (from MEETING_AI Summary Notes from Meeting_20260108-194018.txt)
+- 2026-01-08: ⚠️ AP process failures and communication breakdown with resource Suraj damaging client trust - Major issues with AP timeliness, accuracy, and completeness. Suraj is unresponsive to feedback and talks over client CFO in meetings. Generic checklists don't address client needs. Client has withdrawn services due to trust issues and would expand relationship if trust could be rebuilt. (from MEETING_AI Summary Notes from Meeting_20260108-194018.txt)
+- 2026-01-08: ✓ Excellent progress with data cleanup completed ahead of schedule - Data migration completed for 3 out of 5 locations. Initial data cleanup phase finished early. Client pleased with support response time. (from 2026-01-08-weekly-client-sync.md)
+- 2026-01-08: Approved additional $15K budget for enhanced testing (from 2026-01-08-weekly-client-sync.md)
+- 2026-01-08: Agreed to extend contract through Q2 2026 for ongoing support (from 2026-01-08-weekly-client-sync.md)
+- 2026-01-08: - Service quality concerns but stable relationship - Public company with consistent 'good not great' service perception. Export 2.0 migration needed. (from MUC Key Accounts at Risk - Weekly Call.docx)
+- 2026-01-08: ✓ Initial data cleanup phase completed ahead of schedule - Data migration completed for 3 out of 5 locations. Client pleased with support ticket response time. Found inventory discrepancy requiring investigation. (from 2026-01-08-weekly-client-sync.md)
+- 2026-01-08: Approved additional $15K budget for enhanced testing (from 2026-01-08-weekly-client-sync.md)
+- 2026-01-08: Agreed to extend contract through Q2 2026 for ongoing support (from 2026-01-08-weekly-client-sync.md)
 - 2026-01-07: Project renamed from 'the-one-group' to 'quatrro-the-one-group-remediation' to follow remediation naming convention
 - 2025-12-29: Project initiated with HubSpot integration planned
 

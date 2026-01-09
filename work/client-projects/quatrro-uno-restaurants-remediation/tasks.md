@@ -28,47 +28,58 @@
 ## Active Tasks
 
 ### High Priority
-- [ ] Task 1 - Description
-  - Due: 2025-01-31
-  - Assignee: Name
-  - Notes: Additional context
+- [ ] Escalate Uno's at-risk status and ongoing financial reporting issues to upper management (Murali, Sudarshan, or Ganesh) if no resolution is achieved at the current level
+  - Assignee: JJ
+  - Context: Follow-up task for Uno's customer at-risk escalation (from MEETING_AI Summary Notes from Meeting_20260108-194018.txt)
 
-- [ ] Task 2 - Description
-  - Due: 2025-02-15
-  - Assignee: Name
+- [ ] Schedule and conduct a debrief with the OPS team to address missed items in the balance sheet reconciliations and clarify the process moving forward
+  - Assignee: JJ
+  - Context: Follow-up task to address Uno's audit and remediation status (from MEETING_AI Summary Notes from Meeting_20260108-194018.txt)
+
+- [ ] Escalate the issue of the system-generated trial balance not showing detailed GL accounts to Sudarshan, Murli, or Nitin and request a resolution before escalating further
+  - Assignee: JJ
+  - Context: Follow-up task from meeting discussing Uno's trial balance reporting issues (from MEETING_AI Summary Notes from Meeting_20260108-194018.txt)
+
+- [ ] Escalate Uno's at-risk status and ongoing financial reporting issues to upper management (Murali, Sudarshan, or Ganesh) if no resolution is achieved at the current level
+  - Assignee: JJ
+  - Context: Conditional escalation task for Uno's customer at-risk status (from MEETING_AI Summary Notes from Meeting_20260108-194018.txt)
+
+- [ ] Schedule and conduct a debrief with the OPS team to address missed items in the balance sheet reconciliations and clarify the process moving forward
+  - Assignee: JJ
+  - Context: Follow-up task to address Uno's audit and remediation status (from MEETING_AI Summary Notes from Meeting_20260108-194018.txt)
+
+- [ ] Escalate the issue of the system-generated trial balance not showing detailed GL accounts to Sudarshan, Murli, or Nitin and request a resolution before escalating further
+  - Assignee: JJ
+  - Context: Follow-up task from meeting regarding Uno's trial balance reporting issues (from MEETING_AI Summary Notes from Meeting_20260108-194018.txt)
+
+- [ ] Propose lump sum cleanup entries for Uno historical InfoSync issues
+  - Assignee: Ganesh Chavan
+  - Context: Stop trying to reconcile old InfoSync data, propose write-offs instead (from MUC Key Accounts at Risk - Weekly Call.docx)
+
+- [ ] War room session to review Uno trial balance internally before client engagement
+  - Assignee: Ganesh Chavan
+  - Context: Need internal review before presenting to Kim to avoid further client frustration (from MUC Key Accounts at Risk - Weekly Call.docx)
+
 
 ### Medium Priority
-- [ ] Task 3 - Description
-- [ ] Task 4 - Description
 
 ### Low Priority
-- [ ] Task 5 - Description
-- [ ] Task 6 - Description
 
 ---
 
 ## Blocked Tasks
 
-### Task Name
-- **Blocked by**: What's blocking this
-- **Resolution needed**: What needs to happen
-- **Owner**: Who should resolve
 
 ---
 
 ## Backlog
 
 ### Future Tasks (Not Yet Scheduled)
-- [ ] Backlog item 1
-- [ ] Backlog item 2
-- [ ] Backlog item 3
-
 ---
 
 ## Completed Tasks
 
 ### Week of 2025-01-15
-- [✓] Example completed task - Completed 2025-01-15
 
 ---
 

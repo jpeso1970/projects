@@ -28,47 +28,30 @@
 ## Active Tasks
 
 ### High Priority
-- [ ] Task 1 - Description
-  - Due: 2025-01-31
-  - Assignee: Name
-  - Notes: Additional context
+- [ ] Conduct business review call with Peachtree Restaurant Partners
+  - Assignee: Ganesh Chavan
+  - Context: Client upset about key employee departures and IT issues (from MUC Key Accounts at Risk - Weekly Call.docx)
 
-- [ ] Task 2 - Description
-  - Due: 2025-02-15
-  - Assignee: Name
 
 ### Medium Priority
-- [ ] Task 3 - Description
-- [ ] Task 4 - Description
 
 ### Low Priority
-- [ ] Task 5 - Description
-- [ ] Task 6 - Description
 
 ---
 
 ## Blocked Tasks
 
-### Task Name
-- **Blocked by**: What's blocking this
-- **Resolution needed**: What needs to happen
-- **Owner**: Who should resolve
 
 ---
 
 ## Backlog
 
 ### Future Tasks (Not Yet Scheduled)
-- [ ] Backlog item 1
-- [ ] Backlog item 2
-- [ ] Backlog item 3
-
 ---
 
 ## Completed Tasks
 
 ### Week of 2025-01-15
-- [✓] Example completed task - Completed 2025-01-15
 
 ---
 

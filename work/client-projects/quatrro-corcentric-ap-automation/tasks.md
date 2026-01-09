@@ -28,41 +28,25 @@
 ## Active Tasks
 
 ### High Priority
-- [ ] Task 1 - Description
-  - Due: 2025-01-31
-  - Assignee: Name
-  - Notes: Additional context
+- [ ] Implement Corcentric AP automation project
+  - Context: Estimated 6-month technical implementation project coming up (from Budget Discussion_Planning.docx)
 
-- [ ] Task 2 - Description
-  - Due: 2025-02-15
-  - Assignee: Name
+
 
 ### Medium Priority
-- [ ] Task 3 - Description
-- [ ] Task 4 - Description
 
 ### Low Priority
-- [ ] Task 5 - Description
-- [ ] Task 6 - Description
 
 ---
 
 ## Blocked Tasks
 
-### Task Name
-- **Blocked by**: What's blocking this
-- **Resolution needed**: What needs to happen
-- **Owner**: Who should resolve
 
 ---
 
 ## Backlog
 
 ### Future Tasks (Not Yet Scheduled)
-- [ ] Backlog item 1
-- [ ] Backlog item 2
-- [ ] Backlog item 3
-
 ---
 
 ## Completed Tasks
