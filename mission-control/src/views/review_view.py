@@ -109,9 +109,9 @@ def render_single_analysis_review(stdscr, staging_manager, analysis: Dict,
         y = 3
         stdscr.addstr(y, 0, "Instructions:", curses.A_BOLD)
         y += 1
-        stdscr.addstr(y, 2, "↑/↓: Navigate items  | Space: Toggle selection  | Tab: Switch section")
+        stdscr.addstr(y, 2, "↑/↓ or j/k: Navigate | Space: Toggle selection  | Tab: Switch section")
         y += 1
-        stdscr.addstr(y, 2, "[A]pprove Selected   | [R]eject All           | [N]ext / [P]rev      | [Q]uit")
+        stdscr.addstr(y, 2, "[A]pprove Selected   | [R]eject All             | [N]ext / [P]rev      | [Q]uit")
         y += 2
 
         # Render sections
@@ -154,14 +154,14 @@ def render_single_analysis_review(stdscr, staging_manager, analysis: Dict,
         current_items = analysis['analysis'][current_section]
         max_idx = len(current_items) - 1
 
-        if key == curses.KEY_UP:
+        if key == curses.KEY_UP or key == ord('k'):
             if current_item_idx > 0:
                 current_item_idx -= 1
                 # Adjust scroll if needed
                 if current_item_idx < scroll_offset:
                     scroll_offset = current_item_idx
 
-        elif key == curses.KEY_DOWN:
+        elif key == curses.KEY_DOWN or key == ord('j'):
             if current_item_idx < max_idx:
                 current_item_idx += 1
                 # Adjust scroll if needed
