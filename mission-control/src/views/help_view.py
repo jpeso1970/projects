@@ -70,7 +70,10 @@ def render_help_modal(stdscr):
         ("Tasks Pane", [
             ("Space", "Toggle task completion ([ ] ↔ [✓])"),
             ("d", "Delete selected task"),
-            ("u", "Undo last deletion"),
+            ("u", "Undo last task deletion (in tasks pane)"),
+        ]),
+        ("Import History", [
+            ("u", "Undo recent imports (from projects/summary pane)"),
         ]),
         ("Other", [
             # ("i", "Import files / Review pending analyses"),  # PHASE 1: Disabled, will be inbox later

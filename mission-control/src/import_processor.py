@@ -16,6 +16,7 @@ try:
     from .content_analyzer import ContentAnalyzer
     from .content_router import ContentRouter
     # from .staging import StagingManager  # PHASE 1: No longer needed
+    from .import_history import ImportHistory  # PHASE 2: Undo/rollback system
     from .file_reader import read_file_content
     AI_ENABLED = True
 except ImportError:
@@ -24,6 +25,7 @@ except ImportError:
         from content_analyzer import ContentAnalyzer
         from content_router import ContentRouter
         # from staging import StagingManager  # PHASE 1: No longer needed
+        from import_history import ImportHistory  # PHASE 2: Undo/rollback system
         from file_reader import read_file_content
         AI_ENABLED = True
     except ImportError:
@@ -395,6 +397,10 @@ class ImportProcessor:
         analyzer = ContentAnalyzer(api_key)
         router = ContentRouter(self.projects_dir)
 
+        # PHASE 2: Initialize import history tracker
+        history_dir = self.projects_dir / ".mission-control" / "history"
+        history = ImportHistory(history_dir, max_entries=10)
+
         # Get all project names
         known_projects = self._get_all_project_names()
 
@@ -410,7 +416,8 @@ class ImportProcessor:
             'projects_updated': set(),
             'holding_items': 0,
             'errors': [],
-            'results': []
+            'results': [],
+            'import_ids': []  # PHASE 2: Track import IDs for history
         }
 
         for import_file in import_files:
@@ -431,6 +438,17 @@ class ImportProcessor:
                 summary['projects_updated'].update(routing_result['projects_updated'])
                 summary['holding_items'] += routing_result['holding_items']
                 summary['errors'].extend(routing_result['errors'])
+
+                # PHASE 2: Add to import history for undo functionality
+                try:
+                    import_id = history.add_entry(
+                        import_file.filename,
+                        import_file.path,
+                        routing_result
+                    )
+                    summary['import_ids'].append(import_id)
+                except Exception as e:
+                    print(f"Warning: Failed to add import history: {e}")
 
                 summary['results'].append({
                     'filename': import_file.filename,

@@ -13,9 +13,11 @@ from .views.split_view import render_split_view
 from .views.three_pane_view import render_three_pane_view
 from .views.imports_view import render_imports_modal, process_imports_with_feedback
 # from .views.review_view import render_review_modal  # PHASE 1: Removed staging/review workflow
+from .views.import_history_view import render_import_history_modal, show_undo_result  # PHASE 2: Undo system
 from .views.help_view import render_help_modal
 from .task_parser import parse_tasks_file, toggle_task_completion, delete_task, undo_task_deletion
 from .import_processor import create_import_dir_readme, ImportProcessor
+from .import_history import ImportHistory  # PHASE 2: Import history
 # from .staging import StagingManager  # PHASE 1: Staging system removed
 
 
@@ -250,9 +252,10 @@ def main_loop(stdscr):
                     curses.napms(800)  # Show for 800ms
                     needs_render = True
 
-        elif key == ord('u') or key == ord('U'):  # Undo key
-            # Undo last deletion
-            if deletion_history:
+        elif key == ord('u') or key == ord('U'):  # Undo key (context-aware)
+            # PHASE 2: Context-aware undo - task deletion when in tasks pane, import undo otherwise
+            if active_pane == "tasks" and deletion_history:
+                # Undo last task deletion (original behavior)
                 deleted_task = deletion_history.pop()
 
                 if undo_task_deletion(deleted_task):
@@ -275,13 +278,29 @@ def main_loop(stdscr):
                     curses.napms(800)  # Show for 800ms
                     needs_render = True
             else:
-                # No deletions to undo
-                stdscr.clear()
-                height, width = stdscr.getmaxyx()
-                msg = "No deletions to undo"
-                stdscr.addstr(height // 2, (width - len(msg)) // 2, msg, curses.A_BOLD)
-                stdscr.refresh()
-                curses.napms(500)
+                # Show import undo modal (new Phase 2 functionality)
+                import_id_to_undo = render_import_history_modal(stdscr, projects_root)
+
+                if import_id_to_undo:
+                    # Perform undo
+                    history_dir = projects_root / ".mission-control" / "history"
+                    history = ImportHistory(history_dir)
+
+                    result = history.undo_import(import_id_to_undo, projects_root)
+
+                    # Show result
+                    show_undo_result(stdscr, result)
+
+                    if result.get('success'):
+                        # Refresh projects after undo
+                        all_projects = load_all_projects()
+                        projects = apply_filter_and_sort(all_projects, filter_by, sort_by)
+
+                        # Refresh tasks if in tasks pane
+                        if projects and selected_project_idx < len(projects):
+                            tasks_file = projects[selected_project_idx].project_dir / "tasks.md"
+                            tasks = parse_tasks_file(tasks_file)
+
                 needs_render = True
 
         elif key == ord('s') or key == ord('S'):

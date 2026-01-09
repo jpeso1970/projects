@@ -53,7 +53,11 @@ class ContentRouter:
             "updates_applied": 0,
             "projects_updated": set(),
             "holding_items": 0,
-            "errors": []
+            "errors": [],
+            # PHASE 2: Add detailed tracking for undo functionality
+            "task_details": [],
+            "decision_details": [],
+            "update_details": []
         }
 
         # Route tasks
@@ -66,6 +70,14 @@ class ContentRouter:
                     self._add_task_to_project(task, source_filename)
                     summary["tasks_added"] += 1
                     summary["projects_updated"].add(task.project)
+
+                    # Track details for undo
+                    summary["task_details"].append({
+                        "text": task.text,
+                        "project": task.project,
+                        "assignee": task.assignee,
+                        "priority": task.priority
+                    })
             except Exception as e:
                 summary["errors"].append(f"Task routing error: {e}")
 
@@ -79,6 +91,13 @@ class ContentRouter:
                     self._add_decision_to_project(decision, source_filename)
                     summary["decisions_added"] += 1
                     summary["projects_updated"].add(decision.project)
+
+                    # Track details for undo
+                    summary["decision_details"].append({
+                        "date": decision.date,
+                        "text": decision.text,
+                        "project": decision.project
+                    })
             except Exception as e:
                 summary["errors"].append(f"Decision routing error: {e}")
 
@@ -92,6 +111,13 @@ class ContentRouter:
                     self._add_update_to_project(update, source_filename)
                     summary["updates_applied"] += 1
                     summary["projects_updated"].add(update.project)
+
+                    # Track details for undo
+                    summary["update_details"].append({
+                        "date": update.date,
+                        "text": update.summary,
+                        "project": update.project
+                    })
             except Exception as e:
                 summary["errors"].append(f"Update routing error: {e}")
 
