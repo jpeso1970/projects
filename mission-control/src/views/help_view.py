@@ -76,6 +76,9 @@ def render_help_modal(stdscr):
         ("Import History", [
             ("u", "Undo recent imports (from projects/summary pane)"),
         ]),
+        ("Project Management", [
+            ("n", "Create new project"),
+        ]),
         ("Other", [
             # ("i", "Import files / Review pending analyses"),  # PHASE 1: Disabled, will be inbox later
             ("?", "Show this help screen"),

@@ -15,11 +15,13 @@ from .views.imports_view import render_imports_modal, process_imports_with_feedb
 # from .views.review_view import render_review_modal  # PHASE 1: Removed staging/review workflow
 from .views.import_history_view import render_import_history_modal, show_undo_result  # PHASE 2: Undo system
 from .views.task_move_view import render_project_picker, show_move_result  # PHASE 3: Task move/reassign
+from .views.project_create_view import render_project_create_modal, show_project_create_result  # PHASE 4: Create project
 from .views.help_view import render_help_modal
 from .task_parser import parse_tasks_file, toggle_task_completion, delete_task, undo_task_deletion
 from .import_processor import create_import_dir_readme, ImportProcessor
 from .import_history import ImportHistory  # PHASE 2: Import history
 from .task_manager import TaskManager  # PHASE 3: Task management
+from .project_creator import ProjectCreator  # PHASE 4: Project creation
 # from .staging import StagingManager  # PHASE 1: Staging system removed
 
 
@@ -448,6 +450,45 @@ def main_loop(stdscr):
         #     # PHASE 1: Staging/review workflow removed - imports now apply automatically
         #     # FUTURE: This key will be repurposed to open the inbox for unmatched content
         #     pass
+
+        elif key == ord('n') or key == ord('N'):  # PHASE 4: Create new project
+            # Show project creation modal
+            project_params = render_project_create_modal(stdscr, projects_root)
+
+            if project_params:
+                # Create the project
+                creator = ProjectCreator(projects_root)
+                result = creator.create_project(
+                    title=project_params['title'],
+                    category=project_params['category'],
+                    container=project_params['container'],
+                    priority=project_params['priority'],
+                    owner=project_params['owner'],
+                    description=project_params['description']
+                )
+
+                # Show result
+                show_project_create_result(stdscr, result)
+
+                # Refresh project list if successful
+                if result.get('success'):
+                    all_projects = load_all_projects()
+                    projects = apply_filter_and_sort(all_projects, filter_by, sort_by)
+
+                    # Try to select the newly created project
+                    new_project_name = result.get('project_name')
+                    if new_project_name:
+                        for i, proj in enumerate(projects):
+                            if proj.name == new_project_name:
+                                selected_project_idx = i
+                                # Load tasks for new project
+                                tasks_file = projects[selected_project_idx].project_dir / "tasks.md"
+                                tasks = parse_tasks_file(tasks_file)
+                                selected_task_idx = 0
+                                summary_scroll_offset = 0
+                                break
+
+                needs_render = True
 
         elif key == ord('?'):
             # Show help modal
