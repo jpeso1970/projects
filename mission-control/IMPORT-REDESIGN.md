@@ -200,7 +200,8 @@ Press [n] anywhere in dashboard:
 | `u` | Undo import | View and undo recent imports |
 | `m` | Move task | Move selected task to another project |
 | `n` | New project | Create new project from dashboard |
-| ~~`i`~~ | ~~Review imports~~ | **REMOVED** - no longer needed |
+| `i` | Inbox | View unmatched items needing routing |
+| ~~`i`~~ | ~~Review imports~~ | **REPURPOSED** - now opens inbox instead of staging review |
 
 ---
 
@@ -355,6 +356,292 @@ Add a single-line scrolling marquee at the very bottom showing recent project up
 **Phase 5**:
 - `src/views/marquee.py` - Scrolling project updates ticker
 
+**Phase 6**:
+- `src/usage_tracker.py` - API usage and cost tracking
+- `src/views/status_bar.py` - Top status bar renderer
+
+---
+
+## Phase 6: Usage Tracking & Status Bar
+
+### Top Status Bar Display
+
+Add a status bar at the very top showing API usage and costs:
+
+```
+┌──────────────────────────────────────────────────────────────────┐
+│ Tokens: 1.2M | Today: $2.45 | Week: $15.30 | Month: $47.80      │
+├────────────────┬─────────────────────────────────────────────────┤
+│ Projects       │ Summary                                          │
+│                │                                                  │
+```
+
+**Features**:
+- Single line at the very top
+- Shows aggregated token usage across all API calls
+- Cost tracking: daily, weekly (week-to-date), monthly (month-to-date)
+- Updates in real-time as API calls are made
+- Persisted to disk for cross-session tracking
+- Color-coded: Green when under budget, yellow approaching limits, red if exceeded
+
+### Implementation Strategy
+
+**Usage Tracking Data Structure:**
+
+```json
+{
+  "daily": {
+    "2026-01-09": {
+      "tokens_used": 125000,
+      "cost_usd": 2.45,
+      "api_calls": 15,
+      "calls": [
+        {
+          "timestamp": "2026-01-09T10:23:45",
+          "operation": "import_analysis",
+          "model": "claude-sonnet-4-5",
+          "input_tokens": 5000,
+          "output_tokens": 3000,
+          "cost_usd": 0.16
+        }
+      ]
+    }
+  },
+  "weekly": {
+    "2026-W02": {
+      "tokens_used": 1200000,
+      "cost_usd": 15.30,
+      "api_calls": 87
+    }
+  },
+  "monthly": {
+    "2026-01": {
+      "tokens_used": 3800000,
+      "cost_usd": 47.80,
+      "api_calls": 312
+    }
+  }
+}
+```
+
+**Storage**: `.mission-control/usage-tracking.json`
+
+**Cost Calculation**:
+- Based on Anthropic pricing for Claude models
+- Input tokens: $3 per million tokens
+- Output tokens: $15 per million tokens
+- Configurable in `config.json` for different models
+
+**Tracking Points**:
+1. **Import analysis** - When AI analyzes dropped files
+2. **Content routing** - When AI decides which project(s) to route to
+3. **Task extraction** - When AI extracts tasks/decisions/updates
+4. **Project matching** - When AI matches content to projects
+
+**Integration**:
+- Wrap all Anthropic API calls in `usage_tracker.track_call()`
+- Decorator pattern: `@track_usage` on functions making API calls
+- Automatic calculation of costs based on token counts
+- Automatic rollup to daily/weekly/monthly aggregates
+
+**New Files**:
+- `src/usage_tracker.py` - Core tracking logic:
+  - `track_call(operation, model, input_tokens, output_tokens)` - Record API call
+  - `get_daily_total()`, `get_weekly_total()`, `get_monthly_total()` - Aggregates
+  - `load_usage_data()`, `save_usage_data()` - Persistence
+  - `calculate_cost(model, input_tokens, output_tokens)` - Cost calculation
+
+- `src/views/status_bar.py` - Rendering:
+  - `render_status_bar(stdscr, y_offset)` - Draw status line
+  - `format_tokens(count)` - Format as "1.2M", "450K", etc.
+  - `format_cost(amount)` - Format as "$2.45", "$15.30", etc.
+  - `get_cost_color(amount, budget)` - Color coding based on budget
+
+**Files to Modify**:
+- `src/import_processor.py` - Add `@track_usage` to AI calls
+- `src/content_router.py` - Add `@track_usage` to routing logic
+- `src/main.py` - Render status bar at top, adjust layout
+- `src/views/three_pane_view.py` - Adjust y_offset for status bar
+
+**Estimated effort**: 4-5 hours
+
+---
+
+## Rethinking Unmatched Content
+
+### Current Problem: The "Holding Project" Anti-Pattern
+
+**Current approach (flawed)**:
+- Content that AI can't match to a project goes to a "holding project"
+- Creates an artificial project that's not really a project
+- Confusing: Is it a real project or just a bucket?
+- Doesn't fit the mental model
+
+### Proposed Solutions
+
+#### Option A: Inbox Mode (Recommended)
+
+**Concept**: Unmatched content goes to a special "Inbox" view accessible via `[i]` key
+
+```
+Press [i] to open Inbox:
+┌─────────────────────────────────────────────────────────────────┐
+│ Inbox (5 unmatched items)                                       │
+├─────────────────────────────────────────────────────────────────┤
+│ Tasks:                                                           │
+│  [ ] Review quarterly financials                                │
+│      Confidence: 45% | Suggested: quatrro-transcendant-brands   │
+│      [m] Move to project   [n] Create new project               │
+│                                                                  │
+│  [ ] Call vendor about invoice                                  │
+│      Confidence: 30% | Suggested: (none)                        │
+│      [m] Move to project   [n] Create new project               │
+│                                                                  │
+│ Decisions:                                                       │
+│  [ ] Approved budget increase for Q2                            │
+│      Confidence: 38% | Suggested: (multiple projects)           │
+│      [m] Move to project   [n] Create new project               │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+**How it works**:
+- Unmatched items stored in `.mission-control/inbox/tasks.json`, `decisions.json`, `updates.json`
+- Badge on status bar: `Inbox: 5` (red if items present)
+- Pressing `[i]` opens inbox view
+- Each item shows AI confidence score and suggested project (if any)
+- User can:
+  - Press `[m]` to move to existing project
+  - Press `[n]` to create new project from item
+  - Press `[d]` to delete/discard item
+- Items automatically removed from inbox when moved
+- Inbox persists across sessions
+
+**Benefits**:
+- Clear separation: Inbox is NOT a project
+- Explicit action required (press `[i]` to review)
+- Shows AI confidence/suggestions to guide routing
+- Natural workflow: "check inbox, route items, done"
+
+**Data Structure**:
+```json
+{
+  "tasks": [
+    {
+      "id": "task-20260109-152330-abc123",
+      "text": "Review quarterly financials",
+      "source_file": "meeting-notes.txt",
+      "added_at": "2026-01-09T15:23:30",
+      "ai_confidence": 0.45,
+      "suggested_project": "quatrro-transcendant-brands",
+      "alternate_suggestions": ["quattro-poke-house"],
+      "reasoning": "Mentions financials and Q1, common to Transcendant project"
+    }
+  ],
+  "decisions": [],
+  "updates": []
+}
+```
+
+#### Option B: Smart Notification with Quick Route
+
+**Concept**: When import creates unmatched content, show notification with quick routing
+
+```
+✓ Imported meeting-notes.txt
+  → Added 3 tasks to quatrro-transcendant-brands
+  → Added 1 decision to quatrro-transcendant-brands
+
+⚠️  2 items need routing:
+  1. Task: "Review quarterly financials" → [Suggested: transcendant-brands]
+     Press 1 to accept | Press [m] to choose project | Press [x] to inbox
+
+  2. Task: "Call vendor" → [No suggestion]
+     Press [m] to choose project | Press [x] to inbox
+```
+
+**How it works**:
+- Notification immediately after import
+- Shows unmatched items inline
+- Quick keys to route instantly (1-9 for suggestions)
+- `[m]` opens project picker
+- `[x]` sends to inbox for later
+- Times out after 10 seconds → items go to inbox automatically
+
+**Benefits**:
+- Immediate routing opportunity
+- Reduces inbox accumulation
+- Fast workflow for obvious matches
+
+#### Option C: Project Suggestion Engine
+
+**Concept**: For low-confidence items, show them IN the suggested project with "?" indicator
+
+```
+Quatrro Transcendant Brands
+
+Tasks (5):
+✓ Update lease documentation
+- Schedule follow-up meeting
+? Review quarterly financials  ← Unmatched but suggested here
+  [✓] Confirm   [✗] Remove   [m] Move to different project
+```
+
+**How it works**:
+- AI assigns unmatched items to "best guess" project with confidence score
+- Items marked with `?` indicator in tasks pane
+- User must explicitly confirm or move
+- Stays in suggested project until confirmed/moved
+- Prevents items from getting lost
+
+**Benefits**:
+- Items appear in context where they might belong
+- Reduces separate "inbox" concept
+- Encourages confirmation workflow
+
+#### Option D: Discard by Default + Search Archive
+
+**Concept**: Don't keep unmatched items at all - archive them with full-text search
+
+```
+Unmatched items discarded to archive:
+- 2 tasks archived to .mission-control/archive/unmatched-20260109.json
+
+To recover: Press [s] to search archive
+```
+
+**How it works**:
+- Low-confidence items automatically archived
+- Full-text search available via `[s]` key
+- User can search and pull items out if needed
+- Assumption: If AI can't match with 50%+ confidence, probably not important
+
+**Benefits**:
+- Reduces cognitive load
+- Inbox doesn't fill up with noise
+- Important items can still be recovered
+
+### Recommendation: **Option A (Inbox Mode)**
+
+**Why Option A is best**:
+1. **Clear mental model**: Inbox is separate from projects
+2. **Explicit workflow**: User knows where unmatched items go
+3. **Visible indicator**: Status bar shows inbox count
+4. **Preserves context**: Items stored with source file and AI reasoning
+5. **Flexible routing**: User can move to project or create new one
+6. **Persistent**: Survives across sessions
+
+**Implementation**:
+- Store in `.mission-control/inbox/` directory
+- Badge on status bar: `Inbox: 5` (only if items present)
+- `[i]` key opens inbox view (reuse `i` key since review workflow deleted)
+- Integration with Phase 3 (task move) and Phase 4 (project creation)
+
+**New Files**:
+- `src/inbox_manager.py` - Add/remove inbox items
+- `src/views/inbox_view.py` - Render inbox modal
+
+**Estimated effort**: 3-4 hours
+
 ---
 
 ## Files to Delete
@@ -365,14 +652,77 @@ Add a single-line scrolling marquee at the very bottom showing recent project up
 
 ---
 
-## Next Steps
+## Implementation Roadmap
 
-1. **Get user approval** on this redesign approach
-2. **Implement Phase 1** (remove review gate) - Quick win
-3. **Test automatic imports** with real files
-4. **Implement Phase 2** (undo) - Safety net
-5. **Iterate based on usage**
+### Phase 1: Remove Review Gate (2-3 hours)
+**Priority**: Immediate - Removes core friction
+- Automatic import application
+- Brief success notifications
+- No staging system
+
+### Phase 2: Undo/Rollback (4-5 hours)
+**Priority**: High - Safety net for automatic imports
+- Last 10 imports tracked
+- Full rollback capability
+- Restore to import directory
+
+### Phase 3: Task Move/Reassign (6-8 hours)
+**Priority**: High - Fix routing mistakes
+- Move tasks between projects
+- Bulk operations
+- Copy to multiple projects
+
+### Phase 4: Create Project Modal (4-6 hours)
+**Priority**: Medium - Complete workflow
+- Inline project creation
+- Auto-scaffolding
+- Immediate availability
+
+### Phase 5: Scrolling Marquee (2-3 hours)
+**Priority**: Low - Visual enhancement
+- Bottom line news ticker
+- Continuous right-to-left scroll
+- Recent project updates
+
+### Phase 6: Usage Tracking & Status Bar (4-5 hours)
+**Priority**: Medium - Visibility and cost awareness
+- Top status bar with API usage
+- Daily/weekly/monthly cost tracking
+- Budget alerts
+
+### Inbox System for Unmatched Content (3-4 hours)
+**Priority**: High - Completes import workflow
+- Replaces holding project concept
+- `[i]` key for inbox view
+- AI confidence scores and suggestions
 
 ---
 
-**This is a significant UX improvement that reduces friction and builds trust in the AI routing system.**
+## Total Estimated Effort
+
+| Phase | Hours | Priority |
+|-------|-------|----------|
+| Phase 1: Auto-apply imports | 2-3 | Immediate |
+| Phase 2: Undo/rollback | 4-5 | High |
+| Phase 3: Task management | 6-8 | High |
+| Phase 4: Project creation | 4-6 | Medium |
+| Phase 5: Scrolling marquee | 2-3 | Low |
+| Phase 6: Status bar | 4-5 | Medium |
+| Inbox system | 3-4 | High |
+| **Total** | **25-34 hours** | |
+
+---
+
+## Next Steps
+
+1. **Get user approval** on this comprehensive redesign
+2. **Implement Phase 1** (automatic imports) - Immediate quick win
+3. **Test with real files** - Validate AI routing accuracy
+4. **Implement Phase 2** (undo) - Add safety net
+5. **Implement Inbox system** - Handle unmatched content properly
+6. **Implement Phase 3** (task management) - Enable corrections
+7. **Implement remaining phases** based on priority and user feedback
+
+---
+
+**This is a comprehensive redesign that transforms Mission Control from a manual review system to an intelligent, trust-first workflow with proper safety nets and correction mechanisms.**
