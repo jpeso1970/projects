@@ -29,15 +29,15 @@ The Mission Control system captures rich project data but displays only a fracti
 ## Medium Effort Improvements
 
 ### Presentation
-- [ ] **Show task assignees in tasks pane** - Add column for assignee when present
+- [x] **Show task assignees in tasks pane** - Added column for assignee in tasks pane
 - [ ] **Display tags as badges** - Show project tags in summary pane
 - [ ] **Show external_links in summary** - Display clickable links (HubSpot, repository, etc.)
 - [ ] **Display stakeholders for work projects** - Show key contacts in summary
 - [ ] **Show estimated vs actual hours** - Display time tracking with utilization %
 
 ### Functionality
-- [ ] **Add filtering capability** - New key `f` to cycle filters (all/active/blocked/work/etc.)
-- [ ] **Implement help screen** - `?` key shows all keybindings in a modal
+- [x] **Add filtering capability** - Press `f` to cycle: all/active/blocked/work/personal/development/family/high
+- [x] **Implement help screen** - Press `?` to show all keybindings in modal
 - [ ] **Auto-calculate progress percent** - Compute from tasks_completed/tasks_total
 - [ ] **Bound summary scroll offset** - Prevent scrolling past content
 - [ ] **Add project quick-open** - `o` key to open project folder in file manager
@@ -86,7 +86,7 @@ The Mission Control system captures rich project data but displays only a fracti
 | `days_since_update` | Computed property | Project list column | Pending |
 | `days_until_due` | Computed property | Summary prominently | ✅ Done |
 | `risk_score` | Computed property | Project list + Summary | ✅ Done |
-| `task.assignee` | tasks.md | Tasks pane column | Pending |
+| `task.assignee` | tasks.md | Tasks pane column | ✅ Done |
 
 ---
 
@@ -146,6 +146,9 @@ The Mission Control system captures rich project data but displays only a fracti
 | 2026-01-09 | Show risk_score visual indicator (🔴🟠🟡🟢) | Completed |
 | 2026-01-09 | Display description in summary pane | Completed |
 | 2026-01-09 | Fix duplicate updates (deduplication) | Completed |
+| 2026-01-09 | Add filtering capability (f key) | Completed |
+| 2026-01-09 | Implement help screen (? key) | Completed |
+| 2026-01-09 | Show task assignees in tasks pane | Completed |
 
 ---
 

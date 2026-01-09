@@ -7,12 +7,13 @@ import sys
 import time
 from pathlib import Path
 
-from .loader import load_all_projects, sort_projects
+from .loader import load_all_projects, sort_projects, filter_projects
 from .views.dashboard import render_dashboard, init_colors
 from .views.split_view import render_split_view
 from .views.three_pane_view import render_three_pane_view
 from .views.imports_view import render_imports_modal, process_imports_with_feedback
 from .views.review_view import render_review_modal
+from .views.help_view import render_help_modal
 from .task_parser import parse_tasks_file, toggle_task_completion, delete_task, undo_task_deletion
 from .import_processor import create_import_dir_readme, ImportProcessor
 from .staging import StagingManager
@@ -61,13 +62,37 @@ def main_loop(stdscr):
     selected_task_idx = 0
     active_pane = "projects"  # Can be: "projects" or "tasks" (summary is view-only)
     sort_by = "priority"  # Can be: priority, category, due_date, last_updated, name, risk
+    filter_by = "all"  # Can be: all, active, blocked, work, personal, development, family, high
     deletion_history = []  # Stack of deleted tasks for undo
     last_import_check = time.time()  # Track last auto-import check
     auto_import_interval = 30  # Check for imports every 30 seconds
     summary_scroll_offset = 0  # Scroll position for summary pane
+    all_projects = projects  # Keep unfiltered list
 
-    # Sort projects initially
-    projects = sort_projects(projects, sort_by)
+    # Apply initial filter and sort
+    def apply_filter_and_sort(all_projs, filt, sort):
+        """Apply filter then sort to projects"""
+        if filt == "all":
+            filtered = all_projs
+        elif filt == "active":
+            filtered = filter_projects(all_projs, status="active")
+        elif filt == "blocked":
+            filtered = filter_projects(all_projs, blocked=True)
+        elif filt == "work":
+            filtered = filter_projects(all_projs, category="work")
+        elif filt == "personal":
+            filtered = filter_projects(all_projs, category="personal")
+        elif filt == "development":
+            filtered = filter_projects(all_projs, category="development")
+        elif filt == "family":
+            filtered = filter_projects(all_projs, category="family")
+        elif filt == "high":
+            filtered = filter_projects(all_projs, priority="high")
+        else:
+            filtered = all_projs
+        return sort_projects(filtered, sort)
+
+    projects = apply_filter_and_sort(all_projects, filter_by, sort_by)
 
     # Load tasks for selected project
     tasks = []
@@ -104,8 +129,8 @@ def main_loop(stdscr):
                         curses.napms(2000)  # Show for 2 seconds
 
                         # Refresh projects in case new data
-                        projects = load_all_projects()
-                        projects = sort_projects(projects, sort_by)
+                        all_projects = load_all_projects()
+                        projects = apply_filter_and_sort(all_projects, filter_by, sort_by)
                         needs_render = True  # Need to re-render after import
                 except Exception as e:
                     # Silent fail - don't interrupt user
@@ -114,7 +139,8 @@ def main_loop(stdscr):
         # Only render if something changed
         if needs_render:
             render_three_pane_view(stdscr, projects, tasks, selected_project_idx,
-                                  selected_task_idx, active_pane, sort_by, summary_scroll_offset)
+                                  selected_task_idx, active_pane, sort_by, summary_scroll_offset,
+                                  filter_by, len(all_projects))
             needs_render = False
 
         # Get user input with timeout (100ms) to allow auto-import checks
@@ -252,19 +278,39 @@ def main_loop(stdscr):
                 next_idx = (current_idx + 1) % len(sort_options)
                 sort_by = sort_options[next_idx]
 
-                # Re-sort projects
-                projects = sort_projects(projects, sort_by)
+                # Re-apply filter and sort
+                projects = apply_filter_and_sort(all_projects, filter_by, sort_by)
 
                 # Reset selection if needed
                 if selected_project_idx >= len(projects):
-                    selected_project_idx = len(projects) - 1
+                    selected_project_idx = max(0, len(projects) - 1)
+                needs_render = True
+
+        elif key == ord('f') or key == ord('F'):
+            # Cycle through filter options (only in projects pane)
+            if active_pane == "projects":
+                filter_options = ["all", "active", "blocked", "work", "personal", "development", "family", "high"]
+                current_idx = filter_options.index(filter_by)
+                next_idx = (current_idx + 1) % len(filter_options)
+                filter_by = filter_options[next_idx]
+
+                # Re-apply filter and sort
+                projects = apply_filter_and_sort(all_projects, filter_by, sort_by)
+
+                # Reset selection
+                selected_project_idx = 0
+                if projects:
+                    tasks_file = projects[selected_project_idx].project_dir / "tasks.md"
+                    tasks = parse_tasks_file(tasks_file)
+                    selected_task_idx = 0
+                    summary_scroll_offset = 0
                 needs_render = True
 
         elif key == ord('r') or key == ord('R'):
             # Refresh data
             try:
-                projects = load_all_projects()
-                projects = sort_projects(projects, sort_by)
+                all_projects = load_all_projects()
+                projects = apply_filter_and_sort(all_projects, filter_by, sort_by)
 
                 # Reset project selection if needed
                 if selected_project_idx >= len(projects):
@@ -383,8 +429,8 @@ def main_loop(stdscr):
                         stdscr.getch()
 
                         # Refresh projects
-                        projects = load_all_projects()
-                        projects = sort_projects(projects, sort_by)
+                        all_projects = load_all_projects()
+                        projects = apply_filter_and_sort(all_projects, filter_by, sort_by)
                         needs_render = True
 
                 except Exception as e:
@@ -401,15 +447,16 @@ def main_loop(stdscr):
                 if should_process:
                     process_imports_with_feedback(stdscr, import_dir, projects_root)
                     # Refresh projects in case new meeting notes were added
-                    projects = load_all_projects()
-                    projects = sort_projects(projects, sort_by)
+                    all_projects = load_all_projects()
+                    projects = apply_filter_and_sort(all_projects, filter_by, sort_by)
                 if selected_project_idx >= len(projects):
                     selected_project_idx = max(0, len(projects) - 1)
                 needs_render = True
 
         elif key == ord('?'):
-            # Show help (future)
-            pass
+            # Show help modal
+            render_help_modal(stdscr)
+            needs_render = True
 
 
 def main():

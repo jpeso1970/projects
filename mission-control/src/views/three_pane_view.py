@@ -17,7 +17,8 @@ from .dashboard import (
 
 def render_three_pane_view(stdscr, projects: List[Project], tasks: List[Task],
                            selected_project_idx: int, selected_task_idx: int,
-                           active_pane: str, sort_by: str, summary_scroll_offset: int = 0):
+                           active_pane: str, sort_by: str, summary_scroll_offset: int = 0,
+                           filter_by: str = "all", total_projects: int = 0):
     """
     Render three-pane view: Top split into Projects (left) | Summary (right), Tasks (bottom)
 
@@ -30,6 +31,8 @@ def render_three_pane_view(stdscr, projects: List[Project], tasks: List[Task],
         active_pane: "projects", "summary", or "tasks"
         sort_by: Current sort criterion for projects
         summary_scroll_offset: Scroll offset for summary pane
+        filter_by: Current filter criterion
+        total_projects: Total number of projects before filtering
     """
     stdscr.clear()
     height, width = stdscr.getmaxyx()
@@ -40,7 +43,8 @@ def render_three_pane_view(stdscr, projects: List[Project], tasks: List[Task],
 
     # === TOP-LEFT: PROJECTS ===
     draw_projects_pane(stdscr, projects, selected_project_idx, sort_by,
-                       active_pane == "projects", 0, 0, top_split_x, top_height)
+                       active_pane == "projects", 0, 0, top_split_x, top_height,
+                       filter_by, total_projects)
 
     # === TOP-RIGHT: PROJECT SUMMARY ===
     selected_project = projects[selected_project_idx] if projects and selected_project_idx < len(projects) else None
@@ -64,7 +68,8 @@ def render_three_pane_view(stdscr, projects: List[Project], tasks: List[Task],
 
 
 def draw_projects_pane(stdscr, projects: List[Project], selected_idx: int,
-                      sort_by: str, is_active: bool, x: int, y: int, width: int, height: int):
+                      sort_by: str, is_active: bool, x: int, y: int, width: int, height: int,
+                      filter_by: str = "all", total_projects: int = 0):
     """Draw the projects pane (top-left)"""
     # Title bar
     title = "PROJECTS" if is_active else "Projects"
@@ -74,7 +79,11 @@ def draw_projects_pane(stdscr, projects: List[Project], selected_idx: int,
 
     try:
         stdscr.addstr(y, x, f" {title} ", title_attr)
-        info = f"  ({len(projects)})  Sort: [{sort_by[:8]}]"
+        # Show count, filter, and sort info
+        count_str = f"({len(projects)}/{total_projects})" if total_projects > 0 else f"({len(projects)})"
+        filter_str = f"[{filter_by}]" if filter_by != "all" else ""
+        sort_str = f"[{sort_by[:8]}]"
+        info = f"  {count_str}  Filter: {filter_str}  Sort: {sort_str}" if filter_str else f"  {count_str}  Sort: {sort_str}"
         stdscr.addstr(y, x + len(title) + 2, info[:width - len(title) - 4],
                      curses.color_pair(COLOR_HEADER))
     except curses.error:
@@ -315,7 +324,9 @@ def draw_tasks_pane(stdscr, tasks: List[Task], selected_idx: int, is_active: boo
 
     # Header row
     header_y = y + 2
-    header = f"{'Status':<6} {'Task':<80}"
+    assignee_width = 12
+    task_width = width - 6 - assignee_width - 6  # status(6) + assignee + padding
+    header = f"{'Status':<6} {'Task':<{task_width}} {'Assignee':<{assignee_width}}"
     try:
         stdscr.addstr(header_y, x + 2, header[:width - 4], curses.color_pair(COLOR_HEADER) | curses.A_BOLD)
         stdscr.addstr(header_y + 1, x + 2, "─" * (width - 4))
@@ -360,11 +371,12 @@ def draw_tasks_pane(stdscr, tasks: List[Task], selected_idx: int, is_active: boo
         else:
             color = COLOR_STALE
 
-        # Format row
+        # Format row with assignee
         status_display = task.status_display
-        task_text = task.text[:width - 12]
+        assignee = (task.assignee or "")[:assignee_width]
+        task_text = task.text[:task_width]
 
-        row = f"{status_display:<6} {task_text}"
+        row = f"{status_display:<6} {task_text:<{task_width}} {assignee:<{assignee_width}}"
 
         attr = curses.color_pair(color)
         if is_selected:
@@ -381,9 +393,9 @@ def draw_footer(stdscr, height: int, width: int, active_pane: str):
     footer_y = height - 1
 
     if active_pane == "projects":
-        footer = "[↑↓] Navigate  [Tab] Tasks  [[] Scroll Up  []] Scroll Down  [s] Sort  [i] Imports  [q] Quit"
+        footer = "[↑↓] Navigate  [Tab] Tasks  [s] Sort  [f] Filter  [i] Imports  [?] Help  [q] Quit"
     else:  # tasks (summary is not directly accessible)
-        footer = "[↑↓] Navigate  [Tab] Projects  [Space] Toggle  [d] Delete  [u] Undo  [q] Quit"
+        footer = "[↑↓] Navigate  [Tab] Projects  [Space] Toggle  [d] Delete  [u] Undo  [?] Help  [q] Quit"
 
     try:
         stdscr.addstr(footer_y, 0, footer[:width], curses.color_pair(COLOR_HEADER))
