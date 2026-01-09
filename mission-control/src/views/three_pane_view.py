@@ -83,11 +83,12 @@ def draw_projects_pane(stdscr, projects: List[Project], selected_idx: int,
     # Header row
     header_y = y + 2
     # Calculate dynamic column widths
-    # Fixed columns: emoji(2) + status(3) + priority(3) + progress(4) + spacing(4) = 16
-    fixed_width = 16
+    # Fixed columns: emoji(2) + status(3) + priority(3) + progress(4) + owner(10) + spacing(5) = 27
+    fixed_width = 27
+    owner_width = 10
     name_width = max(20, width - fixed_width - 4)  # At least 20 chars for name
 
-    header = f"{'Project':<{name_width}} {'St':<3} {'Pri':<3} {'Prg':<4}"
+    header = f"{'Project':<{name_width}} {'Owner':<{owner_width}} {'St':<3} {'Pri':<3} {'Prg':<4}"
     try:
         stdscr.addstr(header_y, x + 1, header[:width - 3], curses.color_pair(COLOR_HEADER) | curses.A_BOLD)
         stdscr.addstr(header_y + 1, x + 1, "─" * (width - 3))
@@ -123,11 +124,12 @@ def draw_projects_pane(stdscr, projects: List[Project], selected_idx: int,
         # Format row with dynamic width
         emoji = get_status_emoji(project)
         name = project.short_name[:name_width]  # Use dynamic width
+        owner = (project.owner or "")[:owner_width]  # Truncate owner to fit
         status = project.status_display[:3]
         priority = project.priority_display[:3]
         progress_pct = f"{project.progress_percent}%"
 
-        row = f"{emoji} {name:<{name_width}} {status:<3} {priority:<3} {progress_pct:>3}"
+        row = f"{emoji} {name:<{name_width}} {owner:<{owner_width}} {status:<3} {priority:<3} {progress_pct:>3}"
 
         attr = curses.color_pair(color)
         if is_selected:
