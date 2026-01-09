@@ -1,119 +1,261 @@
 # Mission Control - Project Dashboard
 
-Fast, terminal-based "mission control" dashboard for managing all your projects.
+A fast, terminal-based dashboard for managing all your projects in the `~/projects` system.
 
-## Features (MVP - Phase 1)
+## Features
 
-✅ **Visual Project Grid**: See all projects at a glance with color-coded status
-✅ **Smart Highlighting**: Blockers, overdue, and stale projects prominently displayed
-✅ **Fast Startup**: < 1 second for typical project counts
-✅ **Zero Dependencies**: Pure Python stdlib (no PyYAML required!)
-✅ **Keyboard Navigation**: Arrow keys, vim-style (j/k), and quick commands
+✅ **Three-Pane Interface**: Projects | Summary | Tasks view
+✅ **Scrollable Project History**: View recent decisions and updates with keyboard controls
+✅ **Flicker-Free Rendering**: Optimized display updates only when needed
+✅ **Color-Coded Status**: Visual indicators for project health
+✅ **Task Management**: View, toggle completion, delete, and undo tasks
+✅ **Multiple Sort Options**: Priority, category, due date, last updated, name, risk
+✅ **Import Processing**: AI-powered file analysis and routing
+✅ **Import Review Workflow**: Stage and review AI analyses before applying
+✅ **Auto-Import Monitoring**: Continuous watching with periodic checks
+✅ **Keyboard Navigation**: Full keyboard control, mouse disabled for reliability
 
-## Installation
+## Quick Start
 
-The dashboard is already installed at:
-```
-~/.claude/skills/mission-control/
-```
+### 🚀 Double-Click Launch (macOS)
 
-## Usage
+The easiest way to use Mission Control:
 
-Launch Mission Control:
+1. Open **Finder** and navigate to `~/projects/mission-control/`
+2. Double-click one of these launchers:
+   - **Mission Control.command** - Main dashboard
+   - **Process Imports.command** - Import file processor
+   - **Watch Imports.command** - Continuous import monitor
+
+Each launcher opens a new Terminal window and runs the application.
+
+### ⌨️ Command Line Launch
+
 ```bash
-~/.claude/skills/mission-control/mc
+# Main dashboard
+~/projects/mission-control/mc
+
+# Process imports once
+~/projects/mission-control/process-imports
+
+# Watch for imports continuously
+~/projects/mission-control/watch-imports
 ```
 
-Or create a symlink for easier access:
-```bash
-ln -s ~/.claude/skills/mission-control/mc /usr/local/bin/mc
-mc
+## Main Dashboard (mc)
+
+### Interface Layout
+
+```
+┌─────────────────────────────┬─────────────────────────────┐
+│         PROJECTS            │      PROJECT SUMMARY        │
+│  [List of all projects]     │  [Selected project details] │
+│  - Status, priority, prog.  │  - Scrollable decisions     │
+│                             │  - Scrollable updates       │
+│                             │  - Progress, dates          │
+├─────────────────────────────┴─────────────────────────────┤
+│                         TASKS                             │
+│  [Tasks for selected project]                             │
+│  - Toggle completion, delete, undo                        │
+└───────────────────────────────────────────────────────────┘
 ```
 
-## Keyboard Commands
+### Keyboard Commands
 
-- **↑/↓** or **k/j**: Navigate project list
-- **s**: Cycle sort order (priority → due date → last updated → name → risk)
-- **r**: Refresh data from disk
-- **Home/End**: Jump to first/last project
+#### Navigation
+- **↑/↓** or **k/j**: Navigate active pane (projects or tasks)
+- **Tab**: Switch between Projects pane and Tasks pane
+- **Home/End**: Jump to first/last item in active pane
+
+#### Projects Pane
+- **s**: Cycle sort order (priority → category → due date → last updated → name → risk)
+- **[** or **PgUp**: Scroll project summary up
+- **]** or **PgDn**: Scroll project summary down
+
+#### Tasks Pane
+- **Space**: Toggle task completion
+- **d**: Delete selected task
+- **u**: Undo last deletion
+
+#### General
+- **i**: Open import review workflow (if pending analyses exist) or import processor
+- **r**: Refresh all project data from disk
 - **q**: Quit
 
-## Color Coding
+### Project Summary Scrolling
 
-- 🟢 **Green**: Active projects
-- 🟡 **Yellow**: On-hold
-- 🔴 **Red**: Blocked or overdue
-- 🔵 **Blue**: Completed
-- ⚪ **Gray**: Stale (7+ days since update)
+The project summary pane (upper-right) displays:
+- Project metadata (status, priority, progress, dates)
+- **Recent Decisions**: Entries from PROJECT.md Recent Updates without emojis
+- **Recent Updates**: Entries from PROJECT.md Recent Updates with emojis (✓, ⚠️, •)
 
-## Project Display
+Use **[** and **]** keys to scroll through decisions and updates when there's more content than fits on screen. Scroll indicators (↑↑, ↓↓) appear when content extends beyond visible area.
 
-Each row shows:
-- **Emoji indicator**: Status at a glance (🚫 blocked, 📌 high priority, ⏰ overdue)
-- **Project name**: Truncated to 30 characters
-- **Status**: ACTV, HOLD, BLCK, DONE
-- **Priority**: HIGH, MED, LOW
-- **Progress bar**: Visual [███░░░] with percentage
-- **Due date**: Formatted as "Jan 15" or "--" if none
-- **Last updated**: "3d" (3 days ago), "today", "yest"
+### Color Coding
 
-## Attention Panel
+- 🟢 **Green**: Active projects, todo tasks
+- 🟡 **Yellow**: On-hold projects, in-progress tasks
+- 🔴 **Red**: Blocked or overdue projects, urgent tasks
+- 🔵 **Blue**: Completed projects and tasks
+- ⚪ **Gray**: Stale projects (7+ days since update)
 
-The bottom panel highlights projects needing attention:
-- 🚫 **BLOCKED**: Projects with `blocked: true` flag
-- ⏰ **OVERDUE**: Past due date and not completed
-- 📅 **STALE**: Not updated in 7+ days
+## Import Processing
+
+### Process Imports (process-imports)
+
+Interactive TUI for processing files from `~/projects/import/`:
+
+**Workflow:**
+1. Drop files into `~/projects/import/`
+2. Launch **Process Imports.command** or run `process-imports`
+3. Choose processing mode:
+   - **AI Analysis**: Uses Claude to analyze content and route to projects
+   - **Manual Routing**: Select destination project manually
+4. Review and confirm routing
+5. Files are analyzed and staged for review
+6. Approve in main dashboard with **[i]** key
+
+**Supported Files:**
+- Images (PNG, JPG, HEIC, etc.)
+- PDFs
+- Text files (TXT, MD)
+- Documents (DOCX)
+- Meeting transcripts
+
+### Watch Imports (watch-imports)
+
+Continuous monitoring mode that auto-processes files:
+
+**Features:**
+- Checks `~/projects/import/` every 10 seconds
+- Auto-processes with AI when files detected
+- Shows real-time progress and status
+- Displays recent import results
+- Keyboard controls:
+  - **q**: Quit
+  - **r**: Force immediate check
+  - **c**: Clear results display
+
+## Import Review Workflow
+
+After files are processed (manually or automatically), they're staged for review:
+
+1. Launch main dashboard (`mc`)
+2. Press **[i]** to open import review
+3. Review each analysis:
+   - See extracted content and AI reasoning
+   - Choose to **Approve** or **Reject**
+4. After reviewing all items, apply approved changes
+5. Tasks, decisions, and updates are added to project files
+6. Original files are archived to `.import-archive/`
 
 ## Technical Details
 
-- **Zero dependencies**: Uses pure Python stdlib (no PyYAML)
-- **Fast parsing**: Simple regex-based YAML parser for predictable PROJECT.md structure
-- **Cached properties**: Risk scores and computed values cached for performance
-- **Curses UI**: Terminal-native interface, no browser needed
+### Architecture
 
-## Project Discovery
-
-Mission Control automatically discovers all PROJECT.md files under:
 ```
 ~/projects/
+├── mission-control/           # This application
+│   ├── mc                     # Main dashboard
+│   ├── process-imports        # Import processor TUI
+│   ├── watch-imports          # Continuous import watcher
+│   ├── Mission Control.command     # Double-click launcher
+│   ├── Process Imports.command     # Import processor launcher
+│   ├── Watch Imports.command       # Import watcher launcher
+│   └── src/
+│       ├── main.py            # Dashboard entry point
+│       ├── models.py          # Project dataclass
+│       ├── loader.py          # PROJECT.md parser
+│       ├── import_processor.py     # Import AI logic
+│       ├── content_analyzer.py     # Content extraction
+│       ├── content_router.py       # AI routing
+│       ├── staging.py         # Review workflow
+│       ├── task_parser.py     # Task parsing
+│       ├── views/             # UI components
+│       │   ├── dashboard.py        # Grid view
+│       │   ├── three_pane_view.py  # Main 3-pane layout
+│       │   ├── imports_view.py     # Import modal
+│       │   └── review_view.py      # Review modal
+│       └── utils/
+│           └── date_utils.py       # Date helpers
+├── import/                    # Drop files here to import
+├── .import-archive/           # Processed files moved here
+└── .mission-control/          # Application data
+    └── staging/               # Pending analyses
 ```
 
-Excluded directories:
+### Performance Optimizations
+
+- **Render-on-change**: Screen only updates when state changes (eliminates flicker)
+- **Mouse events disabled**: Prevents display corruption from scroll events
+- **Virtual scrolling**: Only renders visible items in long lists
+- **Cached properties**: Risk scores and computed values cached
+- **Simple YAML parser**: Regex-based parsing for PROJECT.md (no PyYAML dependency)
+
+### Project Discovery
+
+Automatically discovers all PROJECT.md files under `~/projects/` excluding:
 - `.templates`
 - `_archived`
 - `.git`
 - `.agents`
 - `.docs`
 
-## Coming Soon (Phase 2-5)
+## Dependencies
 
-🔜 Blocker board view (press 'b')
-🔜 Quick update panel (press 'u')
-🔜 HubSpot bulk sync (press 'h')
-🔜 Filtering by status/category/priority
-🔜 Search/fuzzy find
-🔜 Help screen (press '?')
+- **Python 3.9+**
+- **Standard library only** for dashboard (curses, pathlib, re, datetime)
+- **Anthropic SDK** for import processing (AI analysis)
 
-## Files
+## Environment Variables
 
-```
-~/.claude/skills/mission-control/
-├── mc                      # Executable launcher
-├── README.md              # This file
-├── src/
-│   ├── main.py            # Main application entry
-│   ├── models.py          # Project dataclass
-│   ├── loader.py          # PROJECT.md discovery & parsing
-│   ├── views/
-│   │   └── dashboard.py   # Main grid view
-│   └── utils/
-│       └── date_utils.py  # Date formatting helpers
+Set these for import processing functionality:
+
+```bash
+# Required for AI-powered import processing
+export ANTHROPIC_API_KEY="your-api-key"
 ```
 
-## Version
+Add to your shell profile (~/.zshrc or ~/.bashrc):
+```bash
+echo 'export ANTHROPIC_API_KEY="your-key"' >> ~/.zshrc
+source ~/.zshrc
+```
 
-v0.1.0 - MVP Phase 1 Complete
+## Troubleshooting
+
+### Display Issues
+- If display corrupts, quit (q) and restart
+- Ensure terminal is at least 80x24 characters
+- Disable mouse events in terminal preferences if problems persist
+
+### Import Processing Issues
+- Verify ANTHROPIC_API_KEY is set: `echo $ANTHROPIC_API_KEY`
+- Check files are in `~/projects/import/`
+- Review logs in staging directory: `~/.mission-control/staging/`
+
+### Files Not Appearing
+- Run refresh (r) to reload from disk
+- Verify PROJECT.md has valid YAML frontmatter
+- Check file permissions
+
+## Version History
+
+**v1.0** (January 2026)
+- Three-pane interface with scrollable decisions/updates
+- Flicker-free rendering with render-on-change pattern
+- Enhanced import processing with AI routing
+- Review workflow with staging
+- Double-click launchers for macOS
+- Mouse events disabled for reliability
+
+**v0.1** (Initial Release)
+- Basic dashboard with project grid
+- Simple keyboard navigation
+- Color-coded status
 
 ## Support
 
-For issues or feature requests, see your Claude Code session or update the SKILL.md file.
+Part of the `~/projects` system. See the main [projects README](../README.md) for complete documentation.
+
+For issues or feature requests, use Claude Code or modify this file.
