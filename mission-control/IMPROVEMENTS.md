@@ -16,13 +16,13 @@ The Mission Control system captures rich project data but displays only a fracti
 
 ### Presentation
 - [x] **Display owner in project list** - Show project owner between name and status columns
-- [ ] **Show days_until_due in summary** - Already computed, just needs display
-- [ ] **Add needs_review emoji indicator** - Show warning icon for projects needing review
-- [ ] **Show risk_score as visual indicator** - Color intensity or badge based on 0-100 score
-- [ ] **Display description in summary pane** - Show purpose/context from Overview section
+- [x] **Show days_until_due in summary** - Color-coded display with urgency indicators
+- [x] **Add needs_review emoji indicator** - Shows 👀 for projects needing review
+- [x] **Show risk_score as visual indicator** - Shows 🔴🟠🟡🟢 based on score (0-100)
+- [x] **Display description in summary pane** - Shows purpose/context with word wrap
 
 ### Functionality
-- [ ] **Fix duplicate updates issue** - Add deduplication when routing content to PROJECT.md
+- [x] **Fix duplicate updates issue** - Deduplication added to content routing
 
 ---
 
@@ -68,25 +68,25 @@ The Mission Control system captures rich project data but displays only a fracti
 
 ## Data Currently Captured But Not Displayed
 
-| Field | Storage Location | Recommended Display |
-|-------|------------------|---------------------|
-| `owner` | PROJECT.md YAML | Project list + Summary |
-| `collaborators` | PROJECT.md YAML | Summary pane |
-| `stakeholders` | PROJECT.md YAML | Summary pane |
-| `estimated_hours` | PROJECT.md YAML | Summary with utilization |
-| `actual_hours` | PROJECT.md YAML | Summary with utilization |
-| `tags` | PROJECT.md YAML | Summary as badges |
-| `description` | Extracted from Overview | Summary pane |
-| `related_projects` | PROJECT.md YAML | Summary with navigation |
-| `external_links` | PROJECT.md YAML | Summary (clickable) |
-| `repository` | PROJECT.md YAML | Summary pane |
-| `hubspot_company_id` | PROJECT.md YAML | Summary (HubSpot badge) |
-| `hubspot_deal_id` | PROJECT.md YAML | Summary (HubSpot badge) |
-| `needs_review` | PROJECT.md YAML | Project list emoji |
-| `days_since_update` | Computed property | Project list column |
-| `days_until_due` | Computed property | Summary prominently |
-| `risk_score` | Computed property | Project list + Summary |
-| `task.assignee` | tasks.md | Tasks pane column |
+| Field | Storage Location | Recommended Display | Status |
+|-------|------------------|---------------------|--------|
+| `owner` | PROJECT.md YAML | Project list + Summary | ✅ Done |
+| `collaborators` | PROJECT.md YAML | Summary pane | Pending |
+| `stakeholders` | PROJECT.md YAML | Summary pane | Pending |
+| `estimated_hours` | PROJECT.md YAML | Summary with utilization | Pending |
+| `actual_hours` | PROJECT.md YAML | Summary with utilization | Pending |
+| `tags` | PROJECT.md YAML | Summary as badges | Pending |
+| `description` | Extracted from Overview | Summary pane | ✅ Done |
+| `related_projects` | PROJECT.md YAML | Summary with navigation | Pending |
+| `external_links` | PROJECT.md YAML | Summary (clickable) | Pending |
+| `repository` | PROJECT.md YAML | Summary pane | Pending |
+| `hubspot_company_id` | PROJECT.md YAML | Summary (HubSpot badge) | Pending |
+| `hubspot_deal_id` | PROJECT.md YAML | Summary (HubSpot badge) | Pending |
+| `needs_review` | PROJECT.md YAML | Project list emoji | ✅ Done |
+| `days_since_update` | Computed property | Project list column | Pending |
+| `days_until_due` | Computed property | Summary prominently | ✅ Done |
+| `risk_score` | Computed property | Project list + Summary | ✅ Done |
+| `task.assignee` | tasks.md | Tasks pane column | Pending |
 
 ---
 
@@ -141,6 +141,11 @@ The Mission Control system captures rich project data but displays only a fracti
 | Date | Item | Status |
 |------|------|--------|
 | 2026-01-09 | Display owner in project list | Completed |
+| 2026-01-09 | Show days_until_due in summary (color-coded) | Completed |
+| 2026-01-09 | Add needs_review emoji indicator (👀) | Completed |
+| 2026-01-09 | Show risk_score visual indicator (🔴🟠🟡🟢) | Completed |
+| 2026-01-09 | Display description in summary pane | Completed |
+| 2026-01-09 | Fix duplicate updates (deduplication) | Completed |
 
 ---
 

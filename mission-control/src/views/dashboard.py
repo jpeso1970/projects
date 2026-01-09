@@ -49,12 +49,26 @@ def get_status_emoji(project: Project) -> str:
         return "🚫"
     elif project.is_overdue:
         return "⏰"
+    elif project.needs_review:
+        return "👀"
     elif project.priority.lower() == "high":
         return "📌"
     elif project.status.lower() == "completed":
         return "✅"
     else:
         return "  "
+
+
+def get_risk_indicator(risk_score: int) -> str:
+    """Get visual indicator for risk score (0-100)"""
+    if risk_score >= 50:
+        return "🔴"  # High risk
+    elif risk_score >= 30:
+        return "🟠"  # Medium-high risk
+    elif risk_score >= 10:
+        return "🟡"  # Low-medium risk
+    else:
+        return "🟢"  # Low risk
 
 
 def draw_progress_bar(progress: int, width: int = 6) -> str:

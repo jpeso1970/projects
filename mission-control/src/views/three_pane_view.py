@@ -11,7 +11,7 @@ from ..utils.date_utils import format_date, format_days_ago, format_relative_dat
 from .dashboard import (
     COLOR_ACTIVE, COLOR_HOLD, COLOR_BLOCKED, COLOR_COMPLETED,
     COLOR_STALE, COLOR_HEADER, get_status_color, get_status_emoji,
-    draw_progress_bar
+    draw_progress_bar, get_risk_indicator
 )
 
 
@@ -170,10 +170,11 @@ def draw_summary_pane(stdscr, project: Project, is_active: bool,
                      curses.color_pair(COLOR_HEADER) | curses.A_BOLD)
         line_y += 2
 
-        # Status and Priority on same line
+        # Status, Priority, and Risk on same line
         status_color = get_status_color(project)
         emoji = get_status_emoji(project)
-        status_line = f"{emoji} {project.status_display}  {project.priority_display}"
+        risk_indicator = get_risk_indicator(project.risk_score)
+        status_line = f"{emoji} {project.status_display}  {project.priority_display}  {risk_indicator} Risk:{project.risk_score}"
         stdscr.addstr(line_y, x + 1, status_line[:width - 3], curses.color_pair(status_color))
         line_y += 2
 
@@ -183,16 +184,56 @@ def draw_summary_pane(stdscr, project: Project, is_active: bool,
         stdscr.addstr(line_y, x + 1, progress_line[:width - 3])
         line_y += 2
 
-        # Only show most important date (due date if exists, otherwise last updated)
+        # Due date with days until due (prominent if exists)
         if project.due:
             due_str = format_date(project.due)
-            days = format_relative_date(project.due)
-            stdscr.addstr(line_y, x + 1, f"Due: {due_str} ({days})"[:width - 3])
+            days_until = project.days_until_due
+            if days_until is not None:
+                if days_until < 0:
+                    days_text = f"OVERDUE by {abs(days_until)} days!"
+                    due_color = COLOR_BLOCKED
+                elif days_until == 0:
+                    days_text = "DUE TODAY!"
+                    due_color = COLOR_BLOCKED
+                elif days_until <= 7:
+                    days_text = f"{days_until} days left"
+                    due_color = COLOR_HOLD
+                else:
+                    days_text = f"{days_until} days left"
+                    due_color = COLOR_ACTIVE
+                stdscr.addstr(line_y, x + 1, f"Due: {due_str} ({days_text})"[:width - 3],
+                             curses.color_pair(due_color))
+            else:
+                stdscr.addstr(line_y, x + 1, f"Due: {due_str}"[:width - 3])
             line_y += 1
-        elif project.last_updated:
+
+        # Last updated (always show)
+        if project.last_updated:
             updated_str = format_date(project.last_updated)
             days_ago = format_days_ago(project.last_updated)
             stdscr.addstr(line_y, x + 1, f"Updated: {updated_str} ({days_ago})"[:width - 3])
+            line_y += 1
+
+        # Description (purpose/context) if available
+        if project.description:
+            line_y += 1
+            # Word wrap the description
+            desc = project.description[:width * 2 - 6]  # Limit total length
+            if len(desc) > width - 4:
+                # Split into two lines
+                split_point = desc[:width - 4].rfind(' ')
+                if split_point > 0:
+                    stdscr.addstr(line_y, x + 1, desc[:split_point][:width - 3],
+                                 curses.color_pair(COLOR_STALE))
+                    line_y += 1
+                    stdscr.addstr(line_y, x + 1, desc[split_point + 1:][:width - 3],
+                                 curses.color_pair(COLOR_STALE))
+                else:
+                    stdscr.addstr(line_y, x + 1, desc[:width - 3],
+                                 curses.color_pair(COLOR_STALE))
+            else:
+                stdscr.addstr(line_y, x + 1, desc[:width - 3],
+                             curses.color_pair(COLOR_STALE))
             line_y += 1
 
         # Recent Decisions and Updates (scrollable)

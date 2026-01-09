@@ -221,6 +221,13 @@ class ContentRouter:
         # Add to Recent Updates section
         update_text = f"- {decision.date}: {decision.text} (from {source})"
 
+        # Check for duplicates - look for same decision text (ignore date and source)
+        # Normalize for comparison: extract just the decision text
+        decision_text_normalized = decision.text.lower().strip()
+        if decision_text_normalized in content.lower():
+            # Already exists, skip adding duplicate
+            return
+
         if "### Recent Updates" in content:
             # Insert after Recent Updates header
             pattern = "(### Recent Updates.*?\n)"
@@ -270,6 +277,13 @@ class ContentRouter:
         if update.details:
             update_text += f" - {update.details}"
         update_text += f" (from {source})"
+
+        # Check for duplicates - look for same summary text (ignore date and emoji)
+        # Normalize for comparison: extract just the summary text
+        summary_normalized = update.summary.lower().strip()
+        if summary_normalized in content.lower():
+            # Already exists, skip adding duplicate
+            return
 
         if "### Recent Updates" in content:
             pattern = "(### Recent Updates.*?\n)"
