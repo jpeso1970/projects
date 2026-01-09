@@ -190,7 +190,19 @@ def render_project_create_modal(stdscr, projects_dir: Path) -> Optional[Dict]:
 
         if editing_field:
             # Handle editing mode
-            if key == 27:  # ESC - exit editing
+            if key == ord('c') or key == ord('C'):  # Create project (works in any mode)
+                # Validate and create
+                validation_error = _validate_fields(fields)
+                if validation_error:
+                    error_message = validation_error
+                    editing_field = None  # Exit editing to show error
+                else:
+                    return fields
+
+            elif key == ord('q') or key == ord('Q'):  # Quit (works in any mode)
+                return None
+
+            elif key == 27:  # ESC - exit editing
                 editing_field = None
                 error_message = None
 
